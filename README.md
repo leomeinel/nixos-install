@@ -21,7 +21,16 @@ Meant for servers that are mainly hosting docker.
 ## Installation
 
 ```sh
-# TODO
+sudo loadkeys de-latin1
+sudo -i
+nix-env -iA nixos.git
+git clone https://github.com/leomeinel/nixos-install.git
+chmod +x ./nixos-install/prepare.sh
+./nixos-install/prepare.sh
+nixos-generate-config --root /mnt
+cp ./nixos-install/configuration.nix /mnt/etc/nixos/
+nixos-install
+reboot
 ```
 
 :information_source: | Use `<...>.sh |& tee <logfile>.log` to create a log file.
