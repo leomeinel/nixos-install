@@ -84,17 +84,17 @@
 
   users.users = {
     systux = {
-      isNormaluser = true;
+      isNormalUser = true;
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
     };
     dock = {
-      isNormaluser = true;
+      isNormalUser = true;
       extraGroups = [ "docker" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINpfWmMbqjzXGRiSQRfA0bXUi+3fHZn4uxBLtKJjUMKP virt@tulip" ];
     };
     leo = {
-      isNormaluser = true;
+      isNormalUser = true;
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAeyG1LTUIvtKmiasP0f/ulrChmwINR9jrHBxrJV57gG virt@tulip" ];
     };
   };
