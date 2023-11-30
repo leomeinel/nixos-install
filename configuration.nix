@@ -168,7 +168,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = "no";
+      PasswordAuthentication = false;
       AuthenticationMethods = "publickey";
       PermitRootLogin = "no";
       AllowTcpForwarding = "no";
