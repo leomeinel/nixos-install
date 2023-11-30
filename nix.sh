@@ -14,3 +14,6 @@ sudo loadkeys de-latin1
 sudo -i
 nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
+chmod +x ./nixos-install/prepare.sh
+./nixos-install/prepare.sh
+nixos-generate-config --root /mnt

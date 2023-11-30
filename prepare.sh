@@ -124,9 +124,6 @@ YES)
     ;;
 esac
 
-# Load $KEYMAP
-loadkeys "$KEYMAP"
-
 # Erase & partition disks
 sgdisk -Z "$DISK1"
 sgdisk -n 0:0:+1G -t 1:ef00 "$DISK1"
