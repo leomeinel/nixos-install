@@ -137,7 +137,7 @@
     neovim
     netcat-openbsd
     noto-fonts
-    ntfs-3g
+    ntfs3g
     oxipng
     p7zip
     procs
