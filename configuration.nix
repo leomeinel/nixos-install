@@ -55,19 +55,19 @@
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "de_DE.UTF-8 UTF-8" "en_US.UTF-8 UTF-8" "en_DK.UTF-8 UTF-8" "fr_FR.UTF-8 UTF-8" "nl_NL.UTF-8 UTF-8" ];
     extraLocaleSettings = {
-      LANGUAGE = en_US.UTF-8:en_US:en:C;
-      LC_ADDRESS = en_US.UTF-8;
-      LC_COLLATE = en_US.UTF-8;
-      LC_CTYPE = en_US.UTF-8;
-      LC_MESSAGES = en_US.UTF-8;
-      LC_MONETARY = en_US.UTF-8;
-      LC_NAME = en_US.UTF-8;
-      LC_NUMERIC = en_US.UTF-8;
-      LC_TIME = en_DK.UTF-8;
-      LC_MEASUREMENT = en_DK.UTF-8;
-      LC_PAPER = nl_NL.UTF-8;
-      LC_TELEPHONE = nl_NL.UTF-8;
-      LC_IDENTIFICATION = nl_NL.UTF-8;
+      LANGUAGE = "en_US.UTF-8:en_US:en:C";
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_COLLATE = "en_US.UTF-8";
+      LC_CTYPE = "en_US.UTF-8";
+      LC_MESSAGES = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_TIME = "en_DK.UTF-8";
+      LC_MEASUREMENT = "en_DK.UTF-8";
+      LC_PAPER = "nl_NL.UTF-8";
+      LC_TELEPHONE = "nl_NL.UTF-8";
+      LC_IDENTIFICATION = "nl_NL.UTF-8";
     };
   };
 
@@ -178,7 +178,7 @@
       Port = 9122;
       TCPKeepAlive = "no";
       AllowAgentForwarding = "no";
-      #Banner = "/etc/issue.net";
+      Banner = "/etc/issue.net";
     };
   };
   services.fwupd.enable = true;
