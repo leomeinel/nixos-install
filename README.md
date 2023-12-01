@@ -2,7 +2,7 @@
 
 My personal NixOS install script using LVM and btrfs.
 
-Meant for servers that are mainly hosting docker.
+Meant for cloud servers that are mainly hosting docker.
 
 ## Info
 
