@@ -28,7 +28,7 @@ git clone https://github.com/leomeinel/nixos-install.git
 chmod +x ./nixos-install/prepare.sh
 ./nixos-install/prepare.sh
 nixos-generate-config --root /mnt
-nixos-install --flake .#red
+nixos-install --flake ./nixos-install/#red
 reboot
 ```
 
