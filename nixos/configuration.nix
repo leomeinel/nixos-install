@@ -13,7 +13,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
 
   boot.kernelParams = [
@@ -1008,7 +1007,6 @@
   };
   services.usbguard = {
     enable = true;
-    package = pkgs.usbguard-nox;
     IPCAllowedGroups = [ "usbguard" ];
   };
   services.logrotate.enable = true;
