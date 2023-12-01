@@ -1014,7 +1014,6 @@
   };
   services.logrotate.enable = true;
   services.sysstat.enable = true;
-  services.fwupd.enable = true;
   /*
     services.snapper = {
     configs =
