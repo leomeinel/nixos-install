@@ -325,7 +325,6 @@
         allowedTCPPorts = [ 80 443 9122 9123 ];
         allowedUDPPorts = [ ];
       };
-      useDHCP = true;
       useNetworkd = true;
     };
   systemd.network = {

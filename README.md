@@ -2,7 +2,7 @@
 
 My personal NixOS install script using LVM and btrfs.
 
-Meant for cloud servers that are mainly hosting docker.
+Meant for aarch64-linux Hetzner Cloud servers that are mainly hosting docker.
 
 ## Info
 
@@ -26,7 +26,6 @@ nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
 chmod +x /root/nixos-install/prepare.sh
 /root/nixos-install/prepare.sh
-nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos
 nixos-install --no-root-password --flake /root/nixos-install/#red
 umount -AR /mnt
 reboot
@@ -36,4 +35,4 @@ reboot
 
 :information_source: | Configure installation using `vim /root/nixos-install/install.conf`.
 
-:information_source: | Configure NixOS using `vim /root/nixos-install/flake.nix` `vim /root/nixos-install/nixos/configuration.nix`.
+:information_source: | Configure NixOS using `vim /root/nixos-install/flake.nix` `vim /root/nixos-install/nixos/configuration.nix` `vim /root/nixos-install/nixos/hardware-configuration.nix`.
