@@ -678,18 +678,19 @@
     };
     systux = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "adm" "audit" "log" "rfkill" "sys" "systemd-journal" "usbguard" "wheel" "video" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
       initialPassword = "2cuddly-Slum";
     };
     dock = {
       isNormalUser = true;
-      extraGroups = [ "docker" ];
+      extraGroups = [ "docker" "video" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINpfWmMbqjzXGRiSQRfA0bXUi+3fHZn4uxBLtKJjUMKP virt@tulip" ];
       initialPassword = "2cuddly-Slum";
     };
     leo = {
       isNormalUser = true;
+      extraGroups = [ "video" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAeyG1LTUIvtKmiasP0f/ulrChmwINR9jrHBxrJV57gG virt@tulip" ];
       initialPassword = "2cuddly-Slum";
     };
