@@ -12,7 +12,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    /mnt/etc/nixos/hardware-configuration.nix
     <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
 
