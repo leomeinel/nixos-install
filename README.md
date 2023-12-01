@@ -26,8 +26,8 @@ nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
 chmod +x ./nixos-install/prepare.sh
 ./nixos-install/prepare.sh
-nixos-generate-config --root /mnt
-nixos-install --no-root-password --impure --flake ./nixos-install/#red
+nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos/
+nixos-install --no-root-password --flake ./nixos-install/#red
 umount -AR /mnt
 reboot
 ```

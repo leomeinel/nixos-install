@@ -12,7 +12,7 @@
 
 {
   imports = [
-    /mnt/etc/nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
     <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
 
@@ -141,16 +141,158 @@
     timeout = 4;
   };
 
-  fileSystems."/dev/shm" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "rw" "noexec" "nodev" "nosuid" ];
-  };
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "rw" "noexec" "nodev" "nosuid" "uid=0" "gid=0" "mode=1700" ];
-  };
+
+
+  fileSystems =
+    let
+      OPTIONS0 = [ "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+      OPTIONS1 = [ "nodev" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+      OPTIONS2 = [ "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+      OPTIONS3 = [ "noexec" "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+    in
+    {
+      # /
+      "/" = {
+        device = "/dev/mapper/vg0-lv0";
+        fsType = "btrfs";
+        options = ${OPTIONS0} ++ [ "subvol=@" ];
+      };
+      "/.snapshots" = {
+        device = "/dev/mapper/vg0-lv0";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@snapshots" ];
+      };
+      # /nix
+      "/nix" = {
+        device = "/dev/mapper/vg0-lv1";
+        fsType = "btrfs";
+        options = ${OPTIONS1} ++ [ "subvol=@nix" ];
+      };
+      "/nix/.snapshots" = {
+        device = "/dev/mapper/vg0-lv1";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@nix_snapshots" ];
+      };
+      # /var
+      "/var" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS2} ++ [ "subvol=@var" ];
+      };
+      "/var/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_snapshots" ];
+      };
+      "/var/lib" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib" ];
+      };
+      "/var/lib/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_snapshots" ];
+      };
+      "/var/lib/docker" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_docker" ];
+      };
+      "/var/lib/docker/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_docker_snapshots" ];
+      };
+      "/var/lib/flatpak" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS2} ++ [ "subvol=@var_lib_flatpak" ];
+      };
+      "/var/lib/flatpak/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_flatpak_snapshots" ];
+      };
+      "/var/lib/libvirt" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_libvirt" ];
+      };
+      "/var/lib/libvirt/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_libvirt_snapshots" ];
+      };
+      "/var/lib/mysql" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_mysql" ];
+      };
+      "/var/lib/mysql/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_lib_mysql_snapshots" ];
+      };
+      "/var/cache" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_cache" ];
+      };
+      "/var/cache/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_cache_snapshots" ];
+      };
+      "/var/games" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_games" ];
+      };
+      "/var/games/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_games_snapshots" ];
+      };
+      "/var/log" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_log" ];
+      };
+      "/var/log/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@var_log_snapshots" ];
+      };
+      # /home
+      "/home" = {
+        device = "/dev/mapper/vg0-lv3";
+        fsType = "btrfs";
+        options = ${OPTIONS2} ++ [ "subvol=@home" ];
+      };
+      "/home/.snapshots" = {
+        device = "/dev/mapper/vg0-lv3";
+        fsType = "btrfs";
+        options = ${OPTIONS3} ++ [ "subvol=@home_snapshots" ];
+      };
+      # /efi
+      "/efi" = {
+        device = "/dev/sda1";
+        fsType = "vfat";
+        options = [ "noexec" "nodev" "nosuid" "noatime" "fmask=0077" "dmask=0077" ];
+      };
+      # tmpfs
+      "/dev/shm" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [ "rw" "noexec" "nodev" "nosuid" ];
+      };
+      "/tmp" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [ "rw" "noexec" "nodev" "nosuid" "uid=0" "gid=0" "mode=1700" ];
+      };
+    };
 
   zramSwap = {
     enable = true;
