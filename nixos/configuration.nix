@@ -118,14 +118,15 @@
   boot.blacklistedKernelModules = [
     "pcspkr"
     "snd_pcsp"
-    # FIXME: Should be disable
-    "dccp"
-    "firewire_core"
-    "firewire_ohci"
-    "rds"
-    "sctp"
-    "tipc"
   ];
+  boot.extraModprobeConfig = ''
+    install dccp /bin/true
+    install firewire_core /bin/true
+    install firewire_ohci /bin/true
+    install rds /bin/true
+    install sctp /bin/true
+    install tipc /bin/true
+  '';
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -157,20 +158,32 @@
     algorithm = "zstd";
   };
 
-  networking = {
-    # https://www.rfc-editor.org/rfc/rfc1178.html
-    # Network devices: elements
-    # Servers: colors
-    # Clients: flowers
-    hostName = "red";
-    # https://www.rfc-editor.org/rfc/rfc8375.html
-    domain = "cloud.arpa";
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 80 443 9122 9123 ];
-      allowedUDPPorts = [ ];
+  networking =
+    let
+      hostname = "red";
+      domain = "cloud.arpa";
+    in
+    {
+      # https://www.rfc-editor.org/rfc/rfc1178.html
+      # Network devices: elements
+      # Servers: colors
+      # Clients: flowers
+      hostName = "${hostname}";
+      # https://www.rfc-editor.org/rfc/rfc8375.html
+      domain = "${domain}";
+      hosts = {
+        "127.0.0.1" = [ "localhost" ];
+        "127.0.1.1" = [ "${hostname}.${domain}" "${hostname}" ];
+        "::1" = [ "ip6-localhost" "ip6-loopback" ];
+        "ff02::1" = [ "ip6-allnodes" ];
+        "ff02::2" = [ "ip6-allrouters" ];
+      };
+      firewall = {
+        enable = true;
+        allowedTCPPorts = [ 80 443 9122 9123 ];
+        allowedUDPPorts = [ ];
+      };
     };
-  };
   systemd.network = {
     enable = true;
     networks."10-wan" = {
@@ -627,6 +640,7 @@
       "-a always,exit -F arch=b32 -S all -k 32bit_api"
     ];
   };
+  security.auditd.enable = true;
   security.apparmor.enable = true;
   security.doas = {
     enable = true;
@@ -824,6 +838,7 @@
 
   services.openssh = {
     enable = true;
+    ports = [ 9122 ];
     settings = {
       PasswordAuthentication = false;
       AuthenticationMethods = "publickey";
@@ -833,7 +848,6 @@
       LogLevel = "VERBOSE";
       MaxAuthTries = 3;
       MaxSessions = 2;
-      Port = 9122;
       TCPKeepAlive = "no";
       AllowAgentForwarding = "no";
       Banner = "/etc/issue.net";
@@ -846,6 +860,7 @@
     extraConfig = ''
       disable_vrfy_command = yes
       inet_interfaces = loopback-only
+      smtpd_banner = "$myhostname ESMTP"
     '';
   };
   services.usbguard = {
@@ -853,6 +868,9 @@
     package = pkgs.usbguard-nox;
     IPCAllowedGroups = [ "usbguard" ];
   };
+  services.logrotate.enable = true;
+  services.sysstat.enable = true;
+  services.fwupd.enable = true;
   /*
     services.snapper = {
     configs =
