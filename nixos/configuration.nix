@@ -1033,7 +1033,7 @@
     };
   */
 
-  system.activationScripts = ''
+  system.activationScripts.text = ''
     usbguard generate-policy >/etc/usbguard/rules.conf
   '';
   system.stateVersion = "23.11";
