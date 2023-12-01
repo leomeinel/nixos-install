@@ -1,4 +1,4 @@
-# arch-install
+# nixos-install
 
 My personal NixOS install script using LVM and btrfs.
 
