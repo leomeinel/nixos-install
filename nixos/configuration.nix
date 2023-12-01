@@ -195,7 +195,7 @@
   console.keyMap = "de-latin1";
 
   security.audit = {
-    enabled = true;
+    enable = true;
     rules = [
       "-D"
       "-b 8192"
