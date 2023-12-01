@@ -8,7 +8,7 @@
   * -----
 */
 
-{ config, lib, pkgs, ... }:
+{ config, lib, nixpkgs, home-manager, ... }:
 
 {
   imports = [
@@ -866,7 +866,7 @@
     auto-optimise-store = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with nixpkgs; [
     bash-completion
     bat
     bc

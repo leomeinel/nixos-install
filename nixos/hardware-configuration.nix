@@ -10,7 +10,7 @@
 
 # FIXME: This should be auto-generated to improve compatibility and simplify configuration.
 # nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, nixpkgs, modulesPath, ... }:
 
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];

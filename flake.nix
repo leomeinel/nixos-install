@@ -21,7 +21,10 @@
       red = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = attrs;
-        modules = [ ./nixos/configuration.nix ];
+        modules = [
+          (nixpkgs + "/nixos/modules/profiles/hardened.nix")
+          ./nixos/configuration.nix
+        ];
       };
     };
   };
