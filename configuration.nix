@@ -183,11 +183,11 @@
   };
   services.fwupd.enable = true;
 
-  system.stateVersion = "23.05";
-
   zramSwap = {
     enable = true;
     memoryPercent = 100;
     algorithm = "zstd";
   };
+
+  system.stateVersion = "23.05";
 }
