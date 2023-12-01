@@ -848,6 +848,11 @@
       inet_interfaces = loopback-only
     '';
   };
+  services.usbguard = {
+    enable = true;
+    package = pkgs.usbguard-nox;
+    IPCAllowedGroups = [ "usbguard" ];
+  };
   /*
     services.snapper = {
     configs =
@@ -870,11 +875,8 @@
     };
   */
 
-  zramSwap = {
-    enable = true;
-    memoryPercent = 100;
-    algorithm = "zstd";
-  };
-
+  system.activationScripts = ''
+    usbguard generate-policy >/etc/usbguard/rules.conf
+  '';
   system.stateVersion = "23.11";
 }
