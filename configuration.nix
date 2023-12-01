@@ -108,7 +108,7 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
     bash-completion
@@ -153,7 +153,6 @@
     tokei
     tree
     unar
-    unrar
     unzip
     wget
     xdg-ninja
