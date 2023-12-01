@@ -21,7 +21,6 @@ Meant for cloud servers that are mainly hosting docker.
 ## Installation
 
 ```sh
-sudo loadkeys de-latin1
 sudo -i
 nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
@@ -35,4 +34,6 @@ reboot
 
 :information_source: | Use `<...>.sh |& tee <logfile>.log` to create a log file.
 
-:information_source: | Configure installation using `vim /root/arch-install/install.conf`.
+:information_source: | Configure installation using `vim /root/nixos-install/install.conf`.
+
+:information_source: | Configure NixOS using `vim /root/nixos-install/flake.nix` `vim /root/nixos-install/nixos/configuration.nix`.
