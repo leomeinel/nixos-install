@@ -24,10 +24,10 @@ Meant for cloud servers that are mainly hosting docker.
 sudo -i
 nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
-chmod +x ./nixos-install/prepare.sh
-./nixos-install/prepare.sh
+chmod +x /root/nixos-install/prepare.sh
+/root/nixos-install/prepare.sh
 nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos/
-nixos-install --no-root-password --flake ./nixos-install/#red
+nixos-install --no-root-password --flake /root/nixos-install/#red
 umount -AR /mnt
 reboot
 ```
