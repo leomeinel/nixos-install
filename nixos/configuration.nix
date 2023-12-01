@@ -127,6 +127,10 @@
     "tipc"
   ];
   boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/efi";
+    };
     systemd-boot = {
       enable = true;
       configurationLimit = 12;
@@ -134,8 +138,6 @@
       editor = false;
     };
     timeout = 4;
-    efi.canTouchEfiVariables = true;
-    efiSysMountPoint = "/efi";
   };
 
   networking = {
