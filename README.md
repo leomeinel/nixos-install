@@ -29,7 +29,7 @@ chmod +x ./nixos-install/prepare.sh
 ./nixos-install/prepare.sh
 nixos-generate-config --root /mnt
 cp ./nixos-install/configuration.nix /mnt/etc/nixos/
-nixos-install
+nixos-install --flake .#red
 reboot
 ```
 
