@@ -140,6 +140,23 @@
     timeout = 4;
   };
 
+  fileSystems."/dev/shm" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "rw" "noexec" "nodev" "nosuid" ];
+  };
+  fileSystems."/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "rw" "noexec" "nodev" "nosuid" "uid=0" "gid=0" "mode=1700" ];
+  };
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+    algorithm = "zstd";
+  };
+
   networking = {
     # https://www.rfc-editor.org/rfc/rfc1178.html
     # Network devices: elements
