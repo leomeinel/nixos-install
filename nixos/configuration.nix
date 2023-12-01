@@ -711,6 +711,7 @@
     inetutils
     jpegoptim
     jq
+    libpwquality
     lrzip
     lshw
     lsof
