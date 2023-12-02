@@ -1015,16 +1015,14 @@ in
       smtpd_banner = "$myhostname ESMTP"
     '';
   };
-  services.usbguard = {
-    enable = true;
-    IPCAllowedGroups = [ "usbguard" ];
-  };
+  services.usbguard.enable = true;
   services.logrotate.enable = true;
   services.sysstat.enable = true;
 
   system.activationScripts.text = ''
     mkdir -p /etc/usbguard
     usbguard generate-policy >/etc/usbguard/rules.conf
+    usbguard add-user -g usbguard --devices=modify,list,listen --policy=list --exceptions=listen
   '';
   system.stateVersion = "23.11";
 }
