@@ -313,13 +313,15 @@
       hostName = "${hostname}";
       # https://www.rfc-editor.org/rfc/rfc8375.html
       domain = "${domain}";
-      hosts = {
-        "127.0.0.1" = [ "localhost" ];
-        "127.0.1.1" = [ "${hostname}.${domain}" "${hostname}" ];
-        "::1" = [ "ip6-localhost" "ip6-loopback" ];
-        "ff02::1" = [ "ip6-allnodes" ];
-        "ff02::2" = [ "ip6-allrouters" ];
-      };
+      # FIXME: Figure out how to overwrite /etc/hosts without using environment.etc
+      environment.etc."hosts".text =
+        ''
+          127.0.0.1  localhost
+          127.0.1.1  ${hostname}.${domain}  ${hostname}
+          ::1  ip6-localhost ip6-loopback
+          ff02::1  ip6-allnodes
+          ff02::2  ip6-allrouters
+        '';
       firewall = {
         enable = true;
         allowedTCPPorts = [ 80 443 9122 9123 ];
@@ -972,7 +974,6 @@
         #  Unauthorized access will be fully investigated and reported  #
         #          to the appropriate law enforcement agencies.         #
         #################################################################
-
       '';
   };
   programs.gnupg.agent = {
