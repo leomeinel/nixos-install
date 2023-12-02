@@ -978,11 +978,9 @@ in
     ethtool
     eza
     fd
-    git
     git-extras
     glow
     gptfdisk
-    htop
     hwinfo
     hyperfine
     inetutils
@@ -993,12 +991,10 @@ in
     lshw
     lsof
     lzop
+    # TODO: Install and configure per user
     macchina
-    man
     mtools
-    neovim
     netcat-openbsd
-    noto-fonts
     ntfs3g
     oxipng
     p7zip
@@ -1009,8 +1005,6 @@ in
     ripgrep
     rsync
     screen
-    sshfs
-    starship
     tokei
     tree
     unar
@@ -1087,11 +1081,21 @@ in
         ''
       );
   };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
   programs.nano.enable = false;
+  # TODO: Install and configure per user
+  programs.git.enable = true;
+  # TODO: Install and configure per user
+  programs.starship.enable = true;
+  # TODO: Install and configure per user
+  programs.neovim.enable = true;
+  programs.htop.enable = true;
+
+  fonts.fontconfig.enable = false;
 
   services.openssh = {
     enable = true;
@@ -1109,6 +1113,7 @@ in
       AllowAgentForwarding = "no";
       Banner = "/etc/issue.net";
     };
+    allowSFTP = true;
   };
   services.fwupd.enable = true;
   services.qemuGuest.enable = true;
