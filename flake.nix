@@ -13,9 +13,11 @@
 
   inputs = {
     # Nixpkgs
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
 
     # Home manager
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
