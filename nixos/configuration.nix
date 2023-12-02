@@ -1016,6 +1016,7 @@ in
   services.sysstat.enable = true;
 
   system.activationScripts.text = ''
+    mkdir -p /etc/usbguard
     usbguard generate-policy >/etc/usbguard/rules.conf
   '';
   system.stateVersion = "23.11";
