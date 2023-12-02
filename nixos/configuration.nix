@@ -942,6 +942,11 @@ in
     };
   };
 
+  # FIXME: Use system groups
+  users.groups = {
+    audit = { };
+    usbguard = { };
+  };
   users.users = {
     root = {
       # FIXME: Use variable
@@ -949,7 +954,7 @@ in
     };
     systux = {
       isNormalUser = true;
-      extraGroups = [ "adm" "audit" "log" "rfkill" "sys" "systemd-journal" "usbguard" "wheel" "video" ];
+      extraGroups = [ "adm" "audit" "systemd-journal" "usbguard" "wheel" "video" ];
       # FIXME: Use variable
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
       # FIXME: Use variable
