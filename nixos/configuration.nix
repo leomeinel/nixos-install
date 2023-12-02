@@ -11,7 +11,9 @@
 { inputs, lib, config, pkgs, ... }:
 
 let
+  # FIXME: Use variable
   hostname = "red";
+  # FIXME: Use variable
   domain = "cloud.arpa";
   OPTIONS0 = [ "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
   OPTIONS1 = [ "nodev" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
@@ -150,7 +152,9 @@ in
   };
 
 
-
+  # FIXME: Use variables for all device except tmpfs
+  # FIXME: Use variables for all subvol=... in options
+  # FIXME: Consider raid setup with /.efi.bak and implement approach from bash
   fileSystems =
     {
       # /
@@ -434,9 +438,11 @@ in
   systemd.network = {
     enable = true;
     networks."10-wan" = {
+      # FIXME: Use variable
       matchConfig.Name = "enp1s0";
       networkConfig.DHCP = "ipv4";
       address = [
+        # FIXME: Use variable
         "2a01:4f8:1c1b:8520::1/64"
       ];
       routes = [
@@ -447,8 +453,10 @@ in
   systemd.coredump.enable = false;
   systemd.network.wait-online.enable = true;
 
+  # FIXME: Use variable
   time.timeZone = "Etc/UTC";
 
+  # FIXME: Use variables
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" ];
@@ -469,6 +477,7 @@ in
     };
   };
 
+  # FIXME: Use variable
   console.keyMap = "de-latin1";
 
   security.audit = {
@@ -907,6 +916,7 @@ in
       }
     ];
     services = {
+      # FIXME: This needs to overwrite, not append
       "passwd".text = lib.mkDefault (
         ''
           # passwd defaults from nixos-install
@@ -934,24 +944,31 @@ in
 
   users.users = {
     root = {
+      # FIXME: Use variable
       initialPassword = "2cuddly-Slum";
     };
     systux = {
       isNormalUser = true;
       extraGroups = [ "adm" "audit" "log" "rfkill" "sys" "systemd-journal" "usbguard" "wheel" "video" ];
+      # FIXME: Use variable
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
+      # FIXME: Use variable
       initialPassword = "2cuddly-Slum";
     };
     virt = {
       isNormalUser = true;
       extraGroups = [ "podman" "video" ];
+      # FIXME: Use variable
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHtjvtgP4b3vEl9QcNkRKg0w+snCkcnxeRgtkNolfL9 virt@tulip" ];
+      # FIXME: Use variable
       initialPassword = "2cuddly-Slum";
     };
     leo = {
       isNormalUser = true;
       extraGroups = [ "video" ];
+      # FIXME: Use variable
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAeyG1LTUIvtKmiasP0f/ulrChmwINR9jrHBxrJV57gG virt@tulip" ];
+      # FIXME: Use variable
       initialPassword = "2cuddly-Slum";
     };
   };
@@ -1127,6 +1144,7 @@ in
   services.logrotate.enable = true;
   services.sysstat.enable = true;
 
+  # FIXME: Find a way to not use system.activationScripts
   system.activationScripts.text = ''
     mkdir -p /etc/usbguard
     usbguard generate-policy >/etc/usbguard/rules.conf

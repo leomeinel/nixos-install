@@ -33,6 +33,7 @@
     in
     {
       nixosConfigurations = {
+        # FIXME: Use variable
         red = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
