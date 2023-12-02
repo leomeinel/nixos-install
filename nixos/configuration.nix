@@ -1133,6 +1133,12 @@ in
     mkdir -p /etc/usbguard
     usbguard generate-policy >/etc/usbguard/rules.conf
     usbguard add-user -g usbguard --devices=modify,list,listen --policy=list --exceptions=listen
+    ## Create /etc/encryption/keys directory
+    mkdir -p /etc/encryption/keys
+    chmod 700 /etc/encryption/keys
+    ## Create /etc/access/keys directory
+    mkdir -p /etc/access/keys
+    chmod 700 /etc/access/keys
   '';
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
