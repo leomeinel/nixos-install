@@ -118,6 +118,9 @@ YES)
     fi
     ## Deactivate all vgs
     vgchange -an
+    ## Detect, close & erase old volumes
+    OLD_DISK1P2="$(lsblk -rnpo TYPE,NAME "$DISK1" | grep "part" | sed 's/part//' | sed -n '2p' | tr -d "[:space:]")"
+    sgdisk -Z "$OLD_DISK1P2"
     ;;
 esac
 
