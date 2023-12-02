@@ -1145,6 +1145,7 @@ in
   services.sysstat.enable = true;
 
   # FIXME: Find a way to not use system.activationScripts
+  # FIXME: usbguard generate-policy has no output during install
   system.activationScripts.text = ''
     mkdir -p /etc/usbguard
     usbguard generate-policy >/etc/usbguard/rules.conf
