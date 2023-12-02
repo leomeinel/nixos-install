@@ -10,6 +10,14 @@
 
 { inputs, lib, config, pkgs, ... }:
 
+let
+  hostname = "red";
+  domain = "cloud.arpa";
+  OPTIONS0 = [ "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+  OPTIONS1 = [ "nodev" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+  OPTIONS2 = [ "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+  OPTIONS3 = [ "noexec" "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -144,12 +152,6 @@
 
 
   fileSystems =
-    let
-      OPTIONS0 = [ "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-      OPTIONS1 = [ "nodev" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-      OPTIONS2 = [ "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-      OPTIONS3 = [ "noexec" "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-    in
     {
       # /
       "/" = {
@@ -300,36 +302,22 @@
     algorithm = "zstd";
   };
 
-  networking =
-    let
-      hostname = "red";
-      domain = "cloud.arpa";
-    in
-    {
-      # https://www.rfc-editor.org/rfc/rfc1178.html
-      # Network devices: elements
-      # Servers: colors
-      # Clients: flowers
-      hostName = "${hostname}";
-      # https://www.rfc-editor.org/rfc/rfc8375.html
-      domain = "${domain}";
-      # FIXME: Figure out how to overwrite /etc/hosts without using environment.etc
-      environment.etc."hosts".text =
-        ''
-          127.0.0.1  localhost
-          127.0.1.1  ${hostname}.${domain}  ${hostname}
-          ::1  ip6-localhost ip6-loopback
-          ff02::1  ip6-allnodes
-          ff02::2  ip6-allrouters
-        '';
-      firewall = {
-        enable = true;
-        allowedTCPPorts = [ 80 443 9122 9123 ];
-        allowedUDPPorts = [ ];
-      };
-      useNetworkd = true;
-      useDHCP = false;
+  networking = {
+    # https://www.rfc-editor.org/rfc/rfc1178.html
+    # Network devices: elements
+    # Servers: colors
+    # Clients: flowers
+    hostName = "${hostname}";
+    # https://www.rfc-editor.org/rfc/rfc8375.html
+    domain = "${domain}";
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 443 9122 9123 ];
+      allowedUDPPorts = [ ];
     };
+    useNetworkd = true;
+    useDHCP = false;
+  };
   systemd.network = {
     enable = true;
     networks."10-wan" = {
@@ -974,6 +962,15 @@
         #  Unauthorized access will be fully investigated and reported  #
         #          to the appropriate law enforcement agencies.         #
         #################################################################
+      '';
+    # FIXME: Figure out how to overwrite /etc/hosts without using environment.etc
+    "hosts".text =
+      ''
+        127.0.0.1  localhost
+        127.0.1.1  ${hostname}.${domain}  ${hostname}
+        ::1  ip6-localhost ip6-loopback
+        ff02::1  ip6-allnodes
+        ff02::2  ip6-allrouters
       '';
   };
   programs.gnupg.agent = {
