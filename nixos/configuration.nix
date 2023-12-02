@@ -964,14 +964,16 @@ in
         #################################################################
       '';
     # FIXME: Figure out how to overwrite /etc/hosts without using environment.etc
-    "hosts".text =
-      ''
-        127.0.0.1  localhost
-        127.0.1.1  ${hostname}.${domain}  ${hostname}
-        ::1  ip6-localhost ip6-loopback
-        ff02::1  ip6-allnodes
-        ff02::2  ip6-allrouters
-      '';
+    "hosts".text = lib.mkForce
+      (
+        ''
+          127.0.0.1  localhost
+          127.0.1.1  ${hostname}.${domain}  ${hostname}
+          ::1  ip6-localhost ip6-loopback
+          ff02::1  ip6-allnodes
+          ff02::2  ip6-allrouters
+        ''
+      );
   };
   programs.gnupg.agent = {
     enable = true;
