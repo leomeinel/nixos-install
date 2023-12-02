@@ -18,7 +18,7 @@
     users = {
       root = import ../home-manager/root/home.nix;
       systux = import ../home-manager/user/home.nix;
-      dock = import ../home-manager/user/home.nix;
+      virt = import ../home-manager/user/home.nix;
       leo = import ../home-manager/user/home.nix;
     };
   };

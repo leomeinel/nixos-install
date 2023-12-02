@@ -196,6 +196,16 @@ in
         fsType = "btrfs";
         options = OPTIONS3 ++ [ "subvol=@var_lib_snapshots" ];
       };
+      "/var/lib/containers" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = OPTIONS3 ++ [ "subvol=@var_lib_containers" ];
+      };
+      "/var/lib/containers/.snapshots" = {
+        device = "/dev/mapper/vg0-lv2";
+        fsType = "btrfs";
+        options = OPTIONS3 ++ [ "subvol=@var_lib_containers_snapshots" ];
+      };
       "/var/lib/docker" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
@@ -775,7 +785,6 @@ in
     ];
   };
   security.auditd.enable = true;
-  security.apparmor.enable = true;
   security.doas = {
     enable = true;
     extraRules = [{
@@ -830,10 +839,10 @@ in
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
       initialPassword = "2cuddly-Slum";
     };
-    dock = {
+    virt = {
       isNormalUser = true;
-      extraGroups = [ "docker" "video" ];
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINpfWmMbqjzXGRiSQRfA0bXUi+3fHZn4uxBLtKJjUMKP virt@tulip" ];
+      extraGroups = [ "podman" "video" ];
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHtjvtgP4b3vEl9QcNkRKg0w+snCkcnxeRgtkNolfL9 virt@tulip" ];
       initialPassword = "2cuddly-Slum";
     };
     leo = {
@@ -844,13 +853,10 @@ in
     };
   };
 
-  virtualisation.docker = {
+  virtualisation.podman = {
     enable = true;
-    storageDriver = "btrfs";
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
   };
 
   nix.settings = {
@@ -892,6 +898,7 @@ in
     ntfs3g
     oxipng
     p7zip
+    podman-compose
     procs
     quilt
     rename
