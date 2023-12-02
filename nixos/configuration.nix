@@ -326,7 +326,7 @@
         allowedUDPPorts = [ ];
       };
       useNetworkd = true;
-      networking.useDHCP = lib.mkDefault false;
+      useDHCP = lib.mkDefault false;
     };
   systemd.network = {
     enable = true;
