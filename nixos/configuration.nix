@@ -155,125 +155,125 @@
       "/" = {
         device = "/dev/mapper/vg0-lv0";
         fsType = "btrfs";
-        options = "${OPTIONS0}" ++ [ "subvol=@" ];
+        options = OPTIONS0 ++ [ "subvol=@" ];
       };
       "/.snapshots" = {
         device = "/dev/mapper/vg0-lv0";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@snapshots" ];
       };
       # /nix
       "/nix" = {
         device = "/dev/mapper/vg0-lv1";
         fsType = "btrfs";
-        options = "${OPTIONS1}" ++ [ "subvol=@nix" ];
+        options = OPTIONS1 ++ [ "subvol=@nix" ];
       };
       "/nix/.snapshots" = {
         device = "/dev/mapper/vg0-lv1";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@nix_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@nix_snapshots" ];
       };
       # /var
       "/var" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS2}" ++ [ "subvol=@var" ];
+        options = OPTIONS2 ++ [ "subvol=@var" ];
       };
       "/var/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_snapshots" ];
       };
       "/var/lib" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib" ];
       };
       "/var/lib/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_snapshots" ];
       };
       "/var/lib/docker" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_docker" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_docker" ];
       };
       "/var/lib/docker/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_docker_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_docker_snapshots" ];
       };
       "/var/lib/flatpak" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS2}" ++ [ "subvol=@var_lib_flatpak" ];
+        options = OPTIONS2 ++ [ "subvol=@var_lib_flatpak" ];
       };
       "/var/lib/flatpak/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_flatpak_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_flatpak_snapshots" ];
       };
       "/var/lib/libvirt" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_libvirt" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_libvirt" ];
       };
       "/var/lib/libvirt/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_libvirt_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_libvirt_snapshots" ];
       };
       "/var/lib/mysql" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_mysql" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_mysql" ];
       };
       "/var/lib/mysql/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_lib_mysql_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_lib_mysql_snapshots" ];
       };
       "/var/cache" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_cache" ];
+        options = OPTIONS3 ++ [ "subvol=@var_cache" ];
       };
       "/var/cache/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_cache_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_cache_snapshots" ];
       };
       "/var/games" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_games" ];
+        options = OPTIONS3 ++ [ "subvol=@var_games" ];
       };
       "/var/games/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_games_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_games_snapshots" ];
       };
       "/var/log" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_log" ];
+        options = OPTIONS3 ++ [ "subvol=@var_log" ];
       };
       "/var/log/.snapshots" = {
         device = "/dev/mapper/vg0-lv2";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@var_log_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@var_log_snapshots" ];
       };
       # /home
       "/home" = {
         device = "/dev/mapper/vg0-lv3";
         fsType = "btrfs";
-        options = "${OPTIONS2}" ++ [ "subvol=@home" ];
+        options = OPTIONS2 ++ [ "subvol=@home" ];
       };
       "/home/.snapshots" = {
         device = "/dev/mapper/vg0-lv3";
         fsType = "btrfs";
-        options = "${OPTIONS3}" ++ [ "subvol=@home_snapshots" ];
+        options = OPTIONS3 ++ [ "subvol=@home_snapshots" ];
       };
       # /efi
       "/efi" = {
