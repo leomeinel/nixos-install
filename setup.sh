@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ###
-# File: prepare.sh
+# File: setup.sh
 # Author: Leopold Meinel (leo@meinel.dev)
 # -----
 # Copyright (c) 2023 Leopold Meinel & contributors
@@ -255,3 +255,8 @@ mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK1P1" /m
     mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1" /mnt/.efi.bak
 ## /boot
 mkdir -p /mnt/boot
+
+# Install NixOS
+nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos
+nixos-install --no-root-password --flake /root/nixos-install/#red
+umount -AR /mnt

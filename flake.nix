@@ -12,20 +12,32 @@
   description = "nixos-install main config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+
+    # Home manager
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }@attrs: {
-    nixosConfigurations = {
-      red = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = attrs;
-        modules = [
-          (nixpkgs + "/nixos/modules/profiles/hardened.nix")
-          ./nixos/configuration.nix
-        ];
+  outputs =
+    { self
+    , nixpkgs
+    , home-manager
+    , ...
+    } @ inputs:
+    let
+      inherit (self) outputs;
+    in
+    {
+      nixosConfigurations = {
+        red = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            (nixpkgs + "/nixos/modules/profiles/hardened.nix")
+            ./nixos/configuration.nix
+          ];
+        };
       };
     };
-  };
 }

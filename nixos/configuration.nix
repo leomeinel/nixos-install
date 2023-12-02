@@ -8,11 +8,12 @@
   * -----
 */
 
-{ config, lib, nixpkgs, home-manager, ... }:
+{ inputs, lib, config, pkgs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    ./home-manager.nix
   ];
 
   boot.kernelParams = [
@@ -325,6 +326,7 @@
         allowedUDPPorts = [ ];
       };
       useNetworkd = true;
+      networking.useDHCP = lib.mkDefault false;
     };
   systemd.network = {
     enable = true;
@@ -865,8 +867,9 @@
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
   };
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
-  environment.systemPackages = with nixpkgs; [
+  environment.systemPackages = with pkgs; [
     bash-completion
     bat
     bc
@@ -1011,27 +1014,6 @@
   };
   services.logrotate.enable = true;
   services.sysstat.enable = true;
-  /*
-    services.snapper = {
-    configs =
-    {
-    root = { };
-    nix = { };
-    var = { };
-    var_lib = { };
-    var_lib_docker = { };
-    var_lib_flatpak = { };
-    var_lib_libvirt = { };
-    var_lib_mysql = { };
-    var_cache = { };
-    var_games = { };
-    var_log = { };
-    home = { };
-    };
-    snapshotInterval = "hourly";
-    cleanupInterval = "1h";
-    };
-  */
 
   system.activationScripts.text = ''
     usbguard generate-policy >/etc/usbguard/rules.conf

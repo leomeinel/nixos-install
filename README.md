@@ -24,10 +24,8 @@ Meant for aarch64-linux Hetzner Cloud servers that are mainly hosting docker.
 sudo -i
 nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
-chmod +x /root/nixos-install/prepare.sh
-/root/nixos-install/prepare.sh
-nixos-install --no-root-password --flake /root/nixos-install/#red
-umount -AR /mnt
+chmod +x /root/nixos-install/setup.sh
+/root/nixos-install/setup.sh
 reboot
 ```
 
