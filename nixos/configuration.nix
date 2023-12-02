@@ -873,6 +873,7 @@ in
     du-dust
     duf
     ethtool
+    eza
     fd
     git
     git-extras
@@ -910,6 +911,7 @@ in
     tokei
     tree
     unar
+    unixtools.xxd
     unzip
     wget
     xdg-ninja
@@ -1024,5 +1026,6 @@ in
     usbguard generate-policy >/etc/usbguard/rules.conf
     usbguard add-user -g usbguard --devices=modify,list,listen --policy=list --exceptions=listen
   '';
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }

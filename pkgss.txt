@@ -1,7 +1,0 @@
-base
-base-devel
-cmake
-eza
-firejail
-logwatch
-xxd-standalone
