@@ -260,6 +260,11 @@ mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK1P1" /m
 mkdir -p /mnt/boot
 
 # Install NixOS
-nixos-generate-config --no-filesystems --root /mnt --dir /root/nixos-install/nixos
-nixos-install --no-root-password --flake /root/nixos-install/#red
+cd /root/nixos-install
+nixos-generate-config --no-filesystems --root /mnt --dir ./nixos
+git add .
+git commit -m "Generate hardware configuration"
+nixos-install --no-root-password --flake ./#red
+git add .
+git commit -m "Generate installation files"
 umount -AR /mnt
