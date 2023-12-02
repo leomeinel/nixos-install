@@ -991,7 +991,6 @@ in
     lshw
     lsof
     lzop
-    # TODO: Install and configure per user
     macchina
     mtools
     netcat-openbsd
@@ -1087,13 +1086,12 @@ in
     enableSSHSupport = true;
   };
   programs.nano.enable = false;
+  programs.starship.enable = true;
+  programs.htop.enable = true;
   # TODO: Install and configure per user
   programs.git.enable = true;
   # TODO: Install and configure per user
-  programs.starship.enable = true;
-  # TODO: Install and configure per user
   programs.neovim.enable = true;
-  programs.htop.enable = true;
 
   fonts.fontconfig.enable = false;
 
