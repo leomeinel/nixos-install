@@ -16,10 +16,10 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      root = import ../home-manager/root/home.nix;
-      systux = import ../home-manager/user/home.nix;
-      virt = import ../home-manager/user/home.nix;
-      leo = import ../home-manager/user/home.nix;
+      root = import ../home-manager/home.nix;
+      systux = import ../home-manager/home.nix;
+      virt = import ../home-manager/home.nix;
+      leo = import ../home-manager/home.nix;
     };
   };
 }
