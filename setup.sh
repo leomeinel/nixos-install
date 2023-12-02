@@ -262,9 +262,11 @@ mkdir -p /mnt/boot
 # Install NixOS
 cd /root/nixos-install
 nixos-generate-config --no-filesystems --root /mnt --dir ./nixos
+git config --global user.email "leo@meinel.dev"
+git config --global user.email "Leopold Johannes Meinel"
 git add .
-git commit -m "Generate hardware configuration"
+git commit -m "Generate hardware-configuration.nix"
 nixos-install --no-root-password --flake ./#red
 git add .
-git commit -m "Generate installation files"
+git commit -m "Generate additional installation files"
 umount -AR /mnt
