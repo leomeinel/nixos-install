@@ -273,7 +273,6 @@ read -rd '\0' STRUCTURE <<EOM
           };
 \0
 EOM
-echo "$STRUCTURE"
 ### END NIXOS CODEGEN
 for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
     case "${SUBVOLUMES[$i]}" in
@@ -324,6 +323,7 @@ fi
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="      # CODEGEN: fileSystems #"
 grep -q "$STRING" "$FILE" || sed_exit
+echo "$CODEGEN" >"$SCRIPT_DIR/CODEGEN.txt"
 sed -i "s/$STRING/$CODEGEN/" "$FILE"
 #### END sed
 ### END NIXOS CODEGEN
