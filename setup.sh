@@ -275,7 +275,7 @@ read -rd '\0' STRUCTURE <<EOF
         device = "REPLACE_DEVICE";
         fsType = "btrfs";
         options = [ "REPLACE_OPTIONS" ];
-        };
+      };
 \0
 EOF
 #### FIXME: Find a way to not have to indent the first line here
