@@ -330,15 +330,12 @@ fi
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="^      # CODEGEN: fileSystems #"
 grep -q "$STRING" "$FILE" || awk_exit
-echo "$CODEGEN" >"$SCRIPT_DIR/CODEGEN.txt"
-awk -v occurrence="$STRING" -v replacement="$CODEGEN" '{sub(/occurrence/,replacement)}1' "$FILE" >"$FILE.tmp" &&
+awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FILE.tmp" &&
     mv "$FILE.tmp" "$FILE"
 #### END awk
 ### END NIXOS CODEGEN
 ## /boot
 mkdir -p /mnt/boot
-
-exit
 
 # Install NixOS
 cd /root/nixos-install
