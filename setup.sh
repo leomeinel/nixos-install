@@ -220,6 +220,17 @@ OPTIONS3="noexec,nodev,nosuid,noatime,space_cache=v2,compress=zstd,ssd,discard=a
 mount_subs0() {
     mount --mkdir -o "$3$2" "$4" "/mnt$1"
     mount --mkdir -o "$OPTIONS3${2}_snapshots" "$4" "/mnt$1.snapshots"
+    ### START NIXOS CODEGEN
+    OPTIONS="$2"
+    APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"$1"}")"
+    APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$4"}")"
+    APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS//,/"\" \""}")"$2}")"
+    CODEGEN="$CODEGEN$APPEND"
+    APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"$1.snapshots"}")"
+    APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$4"}")"
+    APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS3//,/"\" \""}")"${2}_snapshots}")"
+    CODEGEN="$CODEGEN$APPEND"
+    ### END NIXOS CODEGEN
     mount_subs1 "$1" "$3" "$4"
 }
 mount_subs1() {
@@ -227,18 +238,53 @@ mount_subs1() {
         if [[ "${SUBVOLUMES[$a]}" != "$1" ]] && grep -nq "^$1" <<<"${SUBVOLUMES[$a]}"; then
             if grep -nq "^${1}lib/" <<<"${SUBVOLUMES[$a]}" && ! grep -nq "^${1}lib/flatpak/" <<<"${SUBVOLUMES[$a]}"; then
                 mount --mkdir -o "$OPTIONS3${CONFIGS[$a]}" "$3" "/mnt${SUBVOLUMES[$a]}"
+                ### START NIXOS CODEGEN
+                APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"${SUBVOLUMES[$a]}"}")"
+                APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$3"}")"
+                APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS3//,/"\" \""}")"${CONFIGS[$a]}}")"
+                CODEGEN="$CODEGEN$APPEND"
+                ### END NIXOS CODEGEN
             else
                 mount --mkdir -o "$2${CONFIGS[$a]}" "$3" "/mnt${SUBVOLUMES[$a]}"
+                ### START NIXOS CODEGEN
+                OPTIONS="$2"
+                APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"${SUBVOLUMES[$a]}"}")"
+                APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$3"}")"
+                APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS//,/"\" \""}")"${CONFIGS[$a]}}")"
+                CODEGEN="$CODEGEN$APPEND"
+                ### END NIXOS CODEGEN
             fi
             mount --mkdir -o "$OPTIONS3${CONFIGS[$a]}_snapshots" "$3" "/mnt${SUBVOLUMES[$a]}.snapshots"
+            ### START NIXOS CODEGEN
+            APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"${SUBVOLUMES[$a]}.snapshots"}")"
+            APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$3"}")"
+            APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS3//,/"\" \""}")"${CONFIGS[$a]}_snapshots}")"
+            CODEGEN="$CODEGEN$APPEND"
+            ### END NIXOS CODEGEN
         fi
     done
 }
+### START NIXOS CODEGEN
+read -r -d '' STRUCTURE <<EOM
+"REPLACE_SUBVOLUME" = {
+    device = "REPLACE_DEVICE"
+    fsType = "btrfs";
+    options = [ "REPLACE_OPTIONS" ];
+    };
+EOM
+echo "$STRUCTURE"
+### END NIXOS CODEGEN
 for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
     case "${SUBVOLUMES[$i]}" in
     "/")
         mount -o "$OPTIONS0" /dev/mapper/vg0-lv0 "/mnt${SUBVOLUMES[$i]}"
         mount --mkdir -o "${OPTIONS3}snapshots" /dev/mapper/vg0-lv0 "/mnt${SUBVOLUMES[$i]}.snapshots"
+        ### START NIXOS CODEGEN
+        APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"${SUBVOLUMES[$i]}"}")"
+        APPEND="$(echo "${APPEND/REPLACE_DEVICE/"/dev/mapper/vg0-lv0"}")"
+        APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS0//,/"\" \""}")"}")"
+        CODEGEN="$CODEGEN$APPEND"
+        ### END NIXOS CODEGEN
         ;;
     "/nix/")
         mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS1" "/dev/mapper/vg0-lv1"
@@ -253,11 +299,37 @@ for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
 done
 chmod 775 /mnt/var/games
 ## /efi
+OPTIONS4="noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077"
 mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK1P1" /mnt/efi
-[[ -n "$DISK2" ]] &&
-    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1" /mnt/.efi.bak
+### START NIXOS CODEGEN
+APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"/efi"}")"
+APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$DISK1P1"}")"
+APPEND="$(echo "${APPEND/btrfs/"vfat"}")"
+APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS4//,/"\" \""}")"}")"
+CODEGEN="$CODEGEN$APPEND"
+### END NIXOS CODEGEN
+if [[ -n "$DISK2" ]]; then
+    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1" /mnt/.efi.b
+    ### START NIXOS CODEGEN
+    APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"/efi"}")"
+    APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$DISK1P1"}")"
+    APPEND="$(echo "${APPEND/btrfs/"vfat"}")"
+    APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS4//,/"\" \""}")"" \"noauto"}")"
+    CODEGEN="$CODEGEN$APPEND"
+    ### END NIXOS CODEGEN
+fi
+### START NIXOS CODEGEN
+#### START sed
+FILE="$SCRIPT_DIR/nixos/configuration.nix"
+STRING="# CODEGEN: fileSystems #"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s/$STRING/$CODEGEN/" "$FILE"
+#### END sed
+### END NIXOS CODEGEN
 ## /boot
 mkdir -p /mnt/boot
+
+exit
 
 # Install NixOS
 cd /root/nixos-install
