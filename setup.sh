@@ -338,7 +338,7 @@ awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FI
 mkdir -p /mnt/boot
 
 # Install NixOS
-cd /root/nixos-install
+cd "$SCRIPT_DIR"
 nixos-generate-config --no-filesystems --root /mnt --dir ./nixos
 git config user.email "leo@meinel.dev"
 git config user.name "Leopold Johannes Meinel"
