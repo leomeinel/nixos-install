@@ -272,7 +272,7 @@ mount_subs1() {
 ### START NIXOS CODEGEN
 read -rd '\0' STRUCTURE <<EOF
       "REPLACE_SUBVOLUME" = {
-        device = "REPLACE_DEVICE"
+        device = "REPLACE_DEVICE";
         fsType = "btrfs";
         options = [ "REPLACE_OPTIONS" ];
         };
