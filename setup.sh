@@ -265,12 +265,13 @@ mount_subs1() {
     done
 }
 ### START NIXOS CODEGEN
-read -r -d '' STRUCTURE <<EOM
-"REPLACE_SUBVOLUME" = {
-    device = "REPLACE_DEVICE"
-    fsType = "btrfs";
-    options = [ "REPLACE_OPTIONS" ];
-    };
+read -rd '\0' STRUCTURE <<EOM
+      "REPLACE_SUBVOLUME" = {
+          device = "REPLACE_DEVICE"
+          fsType = "btrfs";
+          options = [ "REPLACE_OPTIONS" ];
+          };
+\0
 EOM
 echo "$STRUCTURE"
 ### END NIXOS CODEGEN
@@ -321,7 +322,7 @@ fi
 ### START NIXOS CODEGEN
 #### START sed
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
-STRING="# CODEGEN: fileSystems #"
+STRING="      # CODEGEN: fileSystems #"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s/$STRING/$CODEGEN/" "$FILE"
 #### END sed
