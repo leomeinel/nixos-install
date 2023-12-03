@@ -226,7 +226,7 @@ mount_subs0() {
     mount --mkdir -o "$3$2" "$4" "/mnt$1"
     mount --mkdir -o "$OPTIONS3${2}_snapshots" "$4" "/mnt$1.snapshots"
     ### START NIXOS CODEGEN
-    OPTIONS="$2"
+    OPTIONS="$3"
     APPEND="$(echo "${STRUCTURE/REPLACE_SUBVOLUME/"$1"}")"
     APPEND="$(echo "${APPEND/REPLACE_DEVICE/"$4"}")"
     APPEND="$(echo "${APPEND/REPLACE_OPTIONS/"$(echo "${OPTIONS//,/"\" \""}")"$2}")"
@@ -270,14 +270,16 @@ mount_subs1() {
     done
 }
 ### START NIXOS CODEGEN
-read -rd '\0' STRUCTURE <<EOM
+read -rd '\0' STRUCTURE <<EOF
       "REPLACE_SUBVOLUME" = {
-          device = "REPLACE_DEVICE"
-          fsType = "btrfs";
-          options = [ "REPLACE_OPTIONS" ];
-          };
+        device = "REPLACE_DEVICE"
+        fsType = "btrfs";
+        options = [ "REPLACE_OPTIONS" ];
+        };
 \0
-EOM
+EOF
+#### FIXME: Find a way to not have to indent the first line here
+STRUCTURE="$(echo "${STRUCTURE/"\"REPLACE_SUBVOLUME\""/"      \"REPLACE_SUBVOLUME\""}")"
 ### END NIXOS CODEGEN
 for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
     case "${SUBVOLUMES[$i]}" in
@@ -329,7 +331,8 @@ FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="^      # CODEGEN: fileSystems #"
 grep -q "$STRING" "$FILE" || awk_exit
 echo "$CODEGEN" >"$SCRIPT_DIR/CODEGEN.txt"
-awk -v occurrence="$STRING" -v replacement="$CODEGEN" '{sub(/occurrence/,replacement)}1' "$FILE" >"$FILE"
+awk -v occurrence="$STRING" -v replacement="$CODEGEN" '{sub(/occurrence/,replacement)}1' "$FILE" >"$FILE.tmp" &&
+    mv "$FILE.tmp" "$FILE"
 #### END awk
 ### END NIXOS CODEGEN
 ## /boot
