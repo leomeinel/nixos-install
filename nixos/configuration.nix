@@ -12,13 +12,9 @@
 
 let
   # FIXME: Use variable
-  hostname = "red";
+  HOSTNAME = "red";
   # FIXME: Use variable
-  domain = "cloud.arpa";
-  OPTIONS0 = [ "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-  OPTIONS1 = [ "nodev" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-  OPTIONS2 = [ "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
-  OPTIONS3 = [ "noexec" "nodev" "nosuid" "noatime" "space_cache=v2" "compress=zstd" "ssd" "discard=async" ];
+  DOMAIN = "cloud.arpa";
 in
 {
   imports = [
@@ -321,9 +317,9 @@ in
     # Network devices: elements
     # Servers: colors
     # Clients: flowers
-    hostName = "${hostname}";
+    hostName = "${HOSTNAME}";
     # https://www.rfc-editor.org/rfc/rfc8375.html
-    domain = "${domain}";
+    domain = "${DOMAIN}";
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 443 9122 9123 ];
@@ -1095,7 +1091,7 @@ in
       (
         ''
           127.0.0.1  localhost
-          127.0.1.1  ${hostname}.${domain}  ${hostname}
+          127.0.1.1  ${HOSTNAME}.${DOMAIN}  ${HOSTNAME}
           ::1  ip6-localhost ip6-loopback
           ff02::1  ip6-allnodes
           ff02::2  ip6-allrouters
@@ -1135,8 +1131,6 @@ in
     };
     allowSFTP = true;
   };
-  services.fwupd.enable = true;
-  services.qemuGuest.enable = true;
   services.postfix = {
     enable = true;
     extraConfig = ''
@@ -1145,23 +1139,15 @@ in
       smtpd_banner = "$myhostname ESMTP"
     '';
   };
-  services.usbguard.enable = true;
+  services.usbguard = {
+    enable = true;
+    IPCAllowedGroups = [ "usbguard" ];
+  };
+  services.fwupd.enable = true;
+  services.qemuGuest.enable = true;
   services.logrotate.enable = true;
   services.sysstat.enable = true;
 
-  # FIXME: Find a way to not use system.activationScripts
-  # FIXME: usbguard generate-policy has no output during install
-  system.activationScripts.text = ''
-    mkdir -p /etc/usbguard
-    usbguard generate-policy >/etc/usbguard/rules.conf
-    usbguard add-user -g usbguard --devices=modify,list,listen --policy=list --exceptions=listen
-    ## Create /etc/encryption/keys directory
-    mkdir -p /etc/encryption/keys
-    chmod 700 /etc/encryption/keys
-    ## Create /etc/access/keys directory
-    mkdir -p /etc/access/keys
-    chmod 700 /etc/access/keys
-  '';
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }

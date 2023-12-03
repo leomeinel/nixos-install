@@ -34,3 +34,12 @@ reboot
 :information_source: | Configure installation using `vim /root/nixos-install/install.conf`.
 
 :information_source: | Configure NixOS using `vim /root/nixos-install/flake.nix` `vim /root/nixos-install/nixos/configuration.nix` `vim /root/nixos-install/nixos/hardware-configuration.nix`.
+
+## Post-installation (tty)
+
+:information_source: | Log into $SYSUSER account and run:
+
+```sh
+~/post.sh
+reboot
+```
