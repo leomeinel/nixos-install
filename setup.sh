@@ -22,6 +22,11 @@ sed_exit() {
     echo "       https://github.com/leomeinel/arch-install/issues"
     exit 1
 }
+awk_exit() {
+    echo "ERROR: 'awk' didn't replace, report this @"
+    echo "       https://github.com/leomeinel/arch-install/issues"
+    exit 1
+}
 
 # Unmount everything from /mnt
 mountpoint -q /mnt &&
@@ -319,13 +324,13 @@ if [[ -n "$DISK2" ]]; then
     ### END NIXOS CODEGEN
 fi
 ### START NIXOS CODEGEN
-#### START sed
+#### START awk
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
-STRING="      # CODEGEN: fileSystems #"
-grep -q "$STRING" "$FILE" || sed_exit
+STRING="^      # CODEGEN: fileSystems #"
+grep -q "$STRING" "$FILE" || awk_exit
 echo "$CODEGEN" >"$SCRIPT_DIR/CODEGEN.txt"
-sed -i "s/$STRING/$CODEGEN/" "$FILE"
-#### END sed
+awk -v occurrence="$STRING" -v replacement="$CODEGEN" '{sub(/occurrence/,replacement)}1' "$FILE"
+#### END awk
 ### END NIXOS CODEGEN
 ## /boot
 mkdir -p /mnt/boot
