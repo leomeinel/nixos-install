@@ -793,29 +793,33 @@ in
     audit = { };
     usbguard = { };
   };
-  users.users = {
-    root = {
-      initialPassword = "REPLACE_INITIAL_PASSWORD";
+  users.users =
+    let
+      INITIAL_PASSWORD = "REPLACE_INITIAL_PASSWORD";
+    in
+    {
+      root = {
+        initialPassword = "${INITIAL_PASSWORD}";
+      };
+      systux = {
+        isNormalUser = true;
+        extraGroups = [ "adm" "audit" "systemd-journal" "usbguard" "wheel" "video" ];
+        openssh.authorizedKeys.keys = [ "REPLACE_SYSUSER_PUBKEY" ];
+        initialPassword = "${INITIAL_PASSWORD}";
+      };
+      virt = {
+        isNormalUser = true;
+        extraGroups = [ "podman" "video" ];
+        openssh.authorizedKeys.keys = [ "REPLACE_VIRTUSER_PUBKEY" ];
+        initialPassword = "${INITIAL_PASSWORD}";
+      };
+      leo = {
+        isNormalUser = true;
+        extraGroups = [ "video" ];
+        openssh.authorizedKeys.keys = [ "REPLACE_HOMEUSER_PUBKEY" ];
+        initialPassword = "${INITIAL_PASSWORD}";
+      };
     };
-    systux = {
-      isNormalUser = true;
-      extraGroups = [ "adm" "audit" "systemd-journal" "usbguard" "wheel" "video" ];
-      openssh.authorizedKeys.keys = [ "REPLACE_SYSUSER_PUBKEY" ];
-      initialPassword = users.users.root.initialPassword;
-    };
-    virt = {
-      isNormalUser = true;
-      extraGroups = [ "podman" "video" ];
-      openssh.authorizedKeys.keys = [ "REPLACE_VIRTUSER_PUBKEY" ];
-      initialPassword = users.users.root.initialPassword;
-    };
-    leo = {
-      isNormalUser = true;
-      extraGroups = [ "video" ];
-      openssh.authorizedKeys.keys = [ "REPLACE_HOMEUSER_PUBKEY" ];
-      initialPassword = users.users.root.initialPassword;
-    };
-  };
 
   virtualisation.podman = {
     enable = true;
