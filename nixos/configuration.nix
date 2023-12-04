@@ -11,10 +11,8 @@
 { inputs, lib, config, pkgs, ... }:
 
 let
-  # FIXME: Use variable
-  HOSTNAME = "red";
-  # FIXME: Use variable
-  DOMAIN = "cloud.arpa";
+  HOSTNAME = "REPLACE_HOSTNAME";
+  DOMAIN = "REPLACE_DOMAIN";
 in
 {
   imports = [
@@ -291,12 +289,10 @@ in
   systemd.network = {
     enable = true;
     networks."10-wan" = {
-      # FIXME: Use variable
-      matchConfig.Name = "enp1s0";
+      matchConfig.Name = "REPLACE_NETWORK_INTERFACE";
       networkConfig.DHCP = "ipv4";
       address = [
-        # FIXME: Use variable
-        "2a01:4f8:1c1b:8520::1/64"
+        "REPLACE_IPV6_ADDRESS"
       ];
       routes = [
         { routeConfig.Gateway = "fe80::1"; }
@@ -306,10 +302,8 @@ in
   systemd.coredump.enable = false;
   systemd.network.wait-online.enable = true;
 
-  # FIXME: Use variable
-  time.timeZone = "Etc/UTC";
+  time.timeZone = "REPLACE_TIMEZONE";
 
-  # FIXME: Use variables
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" ];
@@ -330,8 +324,7 @@ in
     };
   };
 
-  # FIXME: Use variable
-  console.keyMap = "de-latin1";
+  console.keyMap = "REPLACE_KEYMAP";
 
   security.audit = {
     enable = true;
@@ -770,7 +763,7 @@ in
     ];
     services = {
       # FIXME: This needs to overwrite, not append
-      "passwd".text = lib.mkDefault (
+      "passwd".text = lib.mkForce (
         ''
           # passwd defaults from nixos-install
           password required pam_pwquality.so shadowretry=3 minlen=12 difok=6 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root
@@ -802,32 +795,25 @@ in
   };
   users.users = {
     root = {
-      # FIXME: Use variable
-      initialPassword = "2cuddly-Slum";
+      initialPassword = "REPLACE_INITIAL_PASSWORD";
     };
     systux = {
       isNormalUser = true;
       extraGroups = [ "adm" "audit" "systemd-journal" "usbguard" "wheel" "video" ];
-      # FIXME: Use variable
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGswEJVocQdIFn8ePBbiRXnKjvHZ51xkpZy5UFbljj93 virt@tulip" ];
-      # FIXME: Use variable
-      initialPassword = "2cuddly-Slum";
+      openssh.authorizedKeys.keys = [ "REPLACE_SYSUSER_PUBKEY" ];
+      initialPassword = users.users.root.initialPassword;
     };
     virt = {
       isNormalUser = true;
       extraGroups = [ "podman" "video" ];
-      # FIXME: Use variable
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHtjvtgP4b3vEl9QcNkRKg0w+snCkcnxeRgtkNolfL9 virt@tulip" ];
-      # FIXME: Use variable
-      initialPassword = "2cuddly-Slum";
+      openssh.authorizedKeys.keys = [ "REPLACE_VIRTUSER_PUBKEY" ];
+      initialPassword = users.users.root.initialPassword;
     };
     leo = {
       isNormalUser = true;
       extraGroups = [ "video" ];
-      # FIXME: Use variable
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAeyG1LTUIvtKmiasP0f/ulrChmwINR9jrHBxrJV57gG virt@tulip" ];
-      # FIXME: Use variable
-      initialPassword = "2cuddly-Slum";
+      openssh.authorizedKeys.keys = [ "REPLACE_HOMEUSER_PUBKEY" ];
+      initialPassword = users.users.root.initialPassword;
     };
   };
 
@@ -1006,5 +992,5 @@ in
   services.sysstat.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.11";
+  system.stateVersion = "REPLACE_NIX_VERSION";
 }

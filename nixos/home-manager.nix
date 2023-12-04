@@ -16,14 +16,10 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      # FIXME: Use variable
       root = import ../home-manager/home.nix;
-      # FIXME: Use variable
-      systux = import ../home-manager/home.nix;
-      # FIXME: Use variable
-      virt = import ../home-manager/home.nix;
-      # FIXME: Use variable
-      leo = import ../home-manager/home.nix;
+      REPLACE_SYSUSER = import ../home-manager/home.nix;
+      REPLACE_VIRTUSER = import ../home-manager/home.nix;
+      REPLACE_HOMEUSER = import ../home-manager/home.nix;
     };
   };
 }

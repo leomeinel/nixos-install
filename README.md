@@ -33,7 +33,7 @@ reboot
 
 :information_source: | Configure installation using `vim /root/nixos-install/install.conf`.
 
-:information_source: | Configure NixOS using `vim /root/nixos-install/flake.nix` `vim /root/nixos-install/nixos/configuration.nix` `vim /root/nixos-install/nixos/hardware-configuration.nix`.
+:information_source: | You can also change your system config in any `.nix` files.
 
 ## Post-installation (tty)
 
