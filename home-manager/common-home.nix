@@ -102,7 +102,6 @@
       extraConfig = {
         core = {
           editor = "nvim";
-          pager = "delta";
           autocrlf = "input";
         };
         init.defaultBranch = "main";
