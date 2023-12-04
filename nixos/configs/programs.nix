@@ -21,7 +21,6 @@
     nano.enable = false;
     # Bash options
     bash = {
-      enable = true;
       enableCompletion = true;
       # Equivalent to .bashrc for interactive sessions
       interactiveShellInit = ''
