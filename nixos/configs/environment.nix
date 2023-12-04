@@ -18,9 +18,9 @@
     defaultPackages = lib.mkForce [ ];
     # /etc
     etc = {
-      "issue".source = ./files/etc/issue;
-      "issue.net".source = ./files/etc/issue.net;
-      "motd".source = ./files/etc/motd;
+      "issue".source = ../files/etc/issue;
+      "issue.net".source = ../files/etc/issue.net;
+      "motd".source = ../files/etc/motd;
       # FIXME: Figure out how to overwrite /etc/hosts without using environment.etc
       "hosts".text = lib.mkForce
         (
