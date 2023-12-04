@@ -270,6 +270,24 @@ mount_subs1() {
     done
 }
 ### START NIXOS CODEGEN
+LV0="/dev/mapper/vg0-lv0"
+LV1="/dev/mapper/vg0-lv1"
+LV2="/dev/mapper/vg0-lv2"
+LV3="/dev/mapper/vg0-lv3"
+for link in /dev/disk/by-uuid/*; do
+    if [[ "$(readlink -f "$link")" = "$(readlink -f "$LV0")" ]]; then
+        LV0_UUID_LINK="$link"
+    fi
+    if [[ "$(readlink -f "$link")" = "$(readlink -f "$LV1")" ]]; then
+        LV1_UUID_LINK="$link"
+    fi
+    if [[ "$(readlink -f "$link")" = "$(readlink -f "$LV2")" ]]; then
+        LV2_UUID_LINK="$link"
+    fi
+    if [[ "$(readlink -f "$link")" = "$(readlink -f "$LV3")" ]]; then
+        LV3_UUID_LINK="$link"
+    fi
+done
 read -rd '\0' STRUCTURE <<EOF
 "REPLACE_SUBVOLUME" = {
   device = "REPLACE_DEVICE";
@@ -282,23 +300,23 @@ EOF
 for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
     case "${SUBVOLUMES[$i]}" in
     "/")
-        mount -o "$OPTIONS0" /dev/mapper/vg0-lv0 "/mnt${SUBVOLUMES[$i]}"
-        mount --mkdir -o "${OPTIONS3}snapshots" /dev/mapper/vg0-lv0 "/mnt${SUBVOLUMES[$i]}.snapshots"
+        mount -o "$OPTIONS0" "$LV0_UUID_LINK" "/mnt${SUBVOLUMES[$i]}"
+        mount --mkdir -o "${OPTIONS3}snapshots" "$LV0_UUID_LINK" "/mnt${SUBVOLUMES[$i]}.snapshots"
         ### START NIXOS CODEGEN
         APPEND="$(echo "${STRUCTURE/"REPLACE_SUBVOLUME"/"${SUBVOLUMES[$i]}"}")"
-        APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"/dev/mapper/vg0-lv0"}")"
+        APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$LV0_UUID_LINK"}")"
         APPEND="$(echo "${APPEND/"REPLACE_OPTIONS"/"$(echo "${OPTIONS0//","/"\" \""}")"}")"
         CODEGEN="$CODEGEN$APPEND"$'\n'""
         ### END NIXOS CODEGEN
         ;;
     "/nix/")
-        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS1" "/dev/mapper/vg0-lv1"
+        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS1" "$LV1_UUID_LINK"
         ;;
     "/var/")
-        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS2" "/dev/mapper/vg0-lv2"
+        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS2" "$LV2_UUID_LINK"
         ;;
     "/home/")
-        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS2" "/dev/mapper/vg0-lv3"
+        mount_subs0 "${SUBVOLUMES[$i]}" "${CONFIGS[$i]}" "$OPTIONS2" "$LV3_UUID_LINK"
         ;;
     esac
 done
