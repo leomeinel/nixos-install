@@ -30,11 +30,11 @@
     # Files in $HOME
     file = {
       "${config.xdg.configHome}" = {
-        source = "./files/.config";
+        source = ./files/.config;
         recursive = true;
       };
       "post.sh" = {
-        source = "./files/scripts/post.sh";
+        source = ./files/scripts/post.sh;
         executable = true;
       };
     };
