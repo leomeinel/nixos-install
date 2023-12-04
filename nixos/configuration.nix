@@ -950,13 +950,82 @@ in
     enable = true;
     enableSSHSupport = true;
   };
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+    loginShellInit = ''
+      # Set environment variables
+      export XDG_CACHE_HOME="$HOME"/.cache
+      export XDG_CONFIG_HOME="$HOME"/.config
+      export XDG_DATA_HOME="$HOME"/.local/share
+      export XDG_STATE_HOME="$HOME"/.local/state
+      export PAGER=/run/current-system/sw/bin/less
+      export VISUAL=/run/current-system/sw/bin/nvim
+      ## Set bat as MANPAGER if it is installed
+      if [[ -n $(/run/current-system/sw/bin/which bat) ]]; then
+          export MANPAGER="/run/current-system/sw/bin/sh -c '/run/current-system/sw/bin/col -bx | /run/current-system/sw/bin/bat -l man -p'"
+          export MANROFFOPT="-c"
+      fi
+      export ANDROID_HOME="$XDG_DATA_HOME"/android
+      export CARGO_HOME="$XDG_DATA_HOME"/cargo
+      export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+      export GOPATH="$XDG_DATA_HOME"/go
+      export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+      export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+      export HISTFILE="$XDG_STATE_HOME"/bash/history
+      export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME"/platformio
+      export R_ENVIRON_USER="$XDG_CONFIG_HOME"/r/.Renviron
+      export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+
+      # If not running interactively, don't do anything
+      [[ $- != *i* ]] &&
+          return
+
+      # Start ssh-agent if it is not already started
+      [[ -z "$SSH_AUTH_SOCK" ]] &&
+          eval "$(/run/current-system/sw/bin/ssh-agent -s)" >/dev/null 2>&1
+
+      # Update rust toolchains if rustup is installed
+      [[ -n $(/run/current-system/sw/bin/which rustup) ]] >/dev/null 2>&1 &&
+          /run/current-system/sw/bin/rustup update >/dev/null 2>&1
+    '';
+    interactiveShellInit = ''
+      # Key bindings
+      bind '"\e[A": history-search-backward'
+      bind '"\e[B": history-search-forward'
+
+      # History
+      HISTCONTROL=ignoredups:ignorespace
+      HISTSIZE=1000
+      HISTFILESIZE=10000
+      shopt -s histappend
+
+      # Line wrap on window resize
+      shopt -s checkwinsize
+
+      # Tab completion for doas
+      complete -cf /run/wrappers/bin/doas
+    '';
+    shellAliases = {
+      # doas
+      doas = "/run/wrappers/bin/doas ";
+      sudo = "/run/wrappers/bin/sudo ";
+      # btrfs
+      df = "/run/current-system/sw/bin/btrfs fi df";
+      # Rust core-utils aliases
+      ls = "/run/current-system/sw/bin/eza -la --color=automatic";
+      cat = "/run/current-system/sw/bin/bat --decorations auto --color auto";
+      grep = "/run/current-system/sw/bin/rg -s --color auto";
+      find = "/run/current-system/sw/bin/fd -Hs -c auto";
+      du = "/run/current-system/sw/bin/dust";
+      ps = "/run/current-system/sw/bin/procs";
+      neofetch = "/run/current-system/sw/bin/macchina";
+      bench = "/run/current-system/sw/bin/hyperfine -w 3 -r 12 --style auto";
+    };
+  };
   programs.nano.enable = false;
   programs.starship.enable = true;
   programs.htop.enable = true;
-  # TODO: Install and configure per user
-  programs.git.enable = true;
-  # TODO: Install and configure per user
-  programs.neovim.enable = true;
 
   fonts.fontconfig.enable = false;
 
