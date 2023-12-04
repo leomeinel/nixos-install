@@ -18,11 +18,11 @@
     {
       # Nixpkgs
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-${NIX_VERSION}";
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-" + "${NIX_VERSION}";
 
       # Home manager
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      home-manager.url = "github:nix-community/home-manager/release-${NIX_VERSION}";
+      home-manager.url = "github:nix-community/home-manager/release-" + "${NIX_VERSION}";
       home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
