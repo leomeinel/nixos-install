@@ -9,7 +9,7 @@
 # -----
 ###
 
-# Source config
+# Set $SCRIPT_DIR
 SCRIPT_DIR="$(dirname -- "$(readlink -f -- "$0")")"
 
 # Fail on error
