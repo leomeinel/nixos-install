@@ -17,4 +17,6 @@
     username = "root";
     homeDirectory = "/root";
   };
+
+  programs.git.signing.key = "2D39C0733D0EF05E";
 }

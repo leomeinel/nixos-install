@@ -17,4 +17,6 @@
     username = "REPLACE_VIRTUSER";
     homeDirectory = "/home/REPLACE_VIRTUSER";
   };
+
+  programs.git.signing.key = "2D39C0733D0EF05E";
 }

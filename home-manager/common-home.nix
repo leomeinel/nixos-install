@@ -21,6 +21,41 @@
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
+    userEmail = "leo@meinel.dev";
+    userName = "Leopold Johannes Meinel";
+    signing.signByDefault = true;
+    delta = {
+      enable = true;
+      options = {
+        decorations = {
+          commit-decoration-style = "blue ol";
+          commit-style = "raw";
+          file-style = "omit";
+          hunk-header-decoration-style = "blue box";
+          hunk-header-file-style = "red";
+          hunk-header-line-number-style = "#067a00";
+          hunk-header-style = "file line-number syntax";
+        };
+        interactive.keep-plus-minus-markers = false;
+        navigate = true;
+        light = false;
+        features = "decorations";
+      };
+    };
+    extraConfig = {
+      core = {
+        editor = "nvim";
+        pager = "delta";
+        autocrlf = "input";
+      };
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      merge.conflictstyle = "diff3";
+      diff.colorMoved = "default";
+      interactive.diffFilter = "delta --color-only --features=interactive";
+      add.interactive.useBuiltin = false;
+      credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
+    };
   };
   programs.neovim = {
     enable = true;

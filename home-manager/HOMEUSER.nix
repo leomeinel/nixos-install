@@ -17,4 +17,6 @@
     username = "REPLACE_HOMEUSER";
     homeDirectory = "/home/REPLACE_HOMEUSER";
   };
+
+  programs.git.signing.key = "2D39C0733D0EF05E";
 }
