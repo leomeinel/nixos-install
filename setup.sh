@@ -427,6 +427,7 @@ git config user.email "leo@meinel.dev"
 git config user.name "Leopold Johannes Meinel"
 git add .
 git commit -m "Generate hardware-configuration.nix"
+cp -R "$SCRIPT_DIR"/* "/mnt/etc/nixos/"
 nixos-install --no-root-password --flake ./#red
 git add .
 git commit -m "Generate additional installation files"
