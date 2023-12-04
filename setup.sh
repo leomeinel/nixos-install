@@ -455,13 +455,14 @@ mkdir -p /mnt/boot
 # Install NixOS
 cd "$SCRIPT_DIR"
 ## Generate hardware-configuration.nix
-nixos-generate-config --no-filesystems --root /mnt --dir ./nixos/configs
+nixos-generate-config --no-filesystems --root /mnt --dir "$SCRIPT_DIR"/nixos/configs
 git config user.email "leo@meinel.dev"
 git config user.name "Leopold Johannes Meinel"
 git add .
 git commit -m "Generate hardware-configuration.nix"
+rm -f "$SCRIPT_DIR"/nixos/configs/configuration.nix
 ## Install NixOS
-nixos-install --no-root-password --flake ./#red
+nixos-install --no-root-password --flake "$SCRIPT_DIR"/#red
 git add .
 git commit -m "Generate installation files"
 ## Transfer repo to system
