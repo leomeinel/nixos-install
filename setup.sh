@@ -333,6 +333,8 @@ grep -q "$STRING" "$FILE" || awk_exit
 awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FILE.tmp" &&
     mv "$FILE.tmp" "$FILE"
 #### END awk
+### END NIXOS CODEGEN
+### START NIXOS REPLACE VARIABLES
 #### START sed
 FILE="$SCRIPT_DIR/flake.nix"
 STRING="REPLACE_NIX_VERSION"
@@ -389,8 +391,8 @@ FILE="$SCRIPT_DIR/home-manager/home.nix"
 STRING="REPLACE_NIX_VERSION"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
-#### START sed
-### END NIXOS CODEGEN
+#### END sed
+### END NIXOS REPLACE VARIABLES
 ## /boot
 mkdir -p /mnt/boot
 
