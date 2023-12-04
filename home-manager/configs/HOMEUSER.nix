@@ -1,5 +1,5 @@
 /*
-  * File: VIRTUSER.nix
+  * File: HOMEUSER.nix
   * Author: Leopold Meinel (leo@meinel.dev)
   * -----
   * Copyright (c) 2023 Leopold Meinel & contributors
@@ -11,12 +11,15 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
-  imports = [ ./common-home.nix ];
+  # Imports
+  imports = [ ../common-home.nix ];
 
-  home = {
-    username = "REPLACE_VIRTUSER";
-    homeDirectory = "/home/REPLACE_VIRTUSER";
-  };
-
+  # Additional git options
   programs.git.signing.key = "2D39C0733D0EF05E";
+
+  # Home options
+  home = {
+    username = "REPLACE_HOMEUSER";
+    homeDirectory = "/home/REPLACE_HOMEUSER";
+  };
 }

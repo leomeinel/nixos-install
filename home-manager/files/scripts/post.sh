@@ -14,4 +14,5 @@
 # Fail on error
 set -e
 
+# Generate usbguard allow-policy for connected devices
 doas usbguard generate-policy >/var/lib/usbguard/rules.conf

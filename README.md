@@ -43,3 +43,9 @@ reboot
 ~/post.sh
 reboot
 ```
+
+:information_source: | Please also set new passwords for every user via:
+
+```sh
+doas passwd $USERNAME
+```

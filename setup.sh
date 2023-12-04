@@ -360,6 +360,7 @@ awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FI
 ### END NIXOS CODEGEN
 ### START NIXOS REPLACE VARIABLES
 #### START sed
+##### flake.nix
 FILE="$SCRIPT_DIR/flake.nix"
 STRING="REPLACE_NIX_VERSION"
 grep -q "$STRING" "$FILE" || sed_exit
@@ -367,13 +368,28 @@ sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 STRING="REPLACE_HOSTNAME"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
+##### home-manager/common-home.nix
+FILE="$SCRIPT_DIR/home-manager/common-home.nix"
+STRING="REPLACE_NIX_VERSION"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+##### home-manager/configs/SYSUSER.nix
+FILE="$SCRIPT_DIR/home-manager/configs/SYSUSER.nix"
+STRING="REPLACE_SYSUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+##### home-manager/configs/VIRTUSER.nix
+FILE="$SCRIPT_DIR/home-manager/configs/VIRTUSER.nix"
+STRING="REPLACE_VIRTUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+##### home-manager/configs/HOMEUSER.nix
+FILE="$SCRIPT_DIR/home-manager/configs/HOMEUSER.nix"
+STRING="REPLACE_HOMEUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+##### nixos/configuration.nix
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
-STRING="REPLACE_HOSTNAME"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
-STRING="REPLACE_DOMAIN"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$DOMAIN|g" "$FILE"
 STRING="REPLACE_NETWORK_INTERFACE"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$NETWORK_INTERFACE|g" "$FILE"
@@ -386,6 +402,38 @@ sed -i "s|$STRING|$TIMEZONE|g" "$FILE"
 STRING="REPLACE_KEYMAP"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$KEYMAP|g" "$FILE"
+STRING="REPLACE_NIX_VERSION"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+##### nixos/configs/home-manager.nix
+FILE="$SCRIPT_DIR/nixos/configs/home-manager.nix"
+STRING="REPLACE_SYSUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$SYSUSER|g" "$FILE"
+STRING="REPLACE_VIRTUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$VIRTUSER|g" "$FILE"
+STRING="REPLACE_HOMEUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$HOMEUSER|g" "$FILE"
+##### nixos/configs/environment.nix
+FILE="$SCRIPT_DIR/nixos/configs/environment.nix"
+STRING="REPLACE_HOSTNAME"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
+STRING="REPLACE_DOMAIN"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$DOMAIN|g" "$FILE"
+##### nixos/configs/networking.nix
+FILE="$SCRIPT_DIR/nixos/configs/networking.nix"
+STRING="REPLACE_HOSTNAME"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
+STRING="REPLACE_DOMAIN"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$DOMAIN|g" "$FILE"
+##### nixos/configs/users.nix
+FILE="$SCRIPT_DIR/nixos/configs/users.nix"
 STRING="REPLACE_INITIAL_PASSWORD"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$INITIAL_PASSWORD|g" "$FILE"
@@ -398,35 +446,7 @@ sed -i "s|$STRING|$VIRTUSER_PUBKEY|g" "$FILE"
 STRING="REPLACE_HOMEUSER_PUBKEY"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$HOMEUSER_PUBKEY|g" "$FILE"
-STRING="REPLACE_NIX_VERSION"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
-FILE="$SCRIPT_DIR/nixos/home-manager.nix"
-STRING="REPLACE_SYSUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$SYSUSER|g" "$FILE"
-STRING="REPLACE_VIRTUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$VIRTUSER|g" "$FILE"
-STRING="REPLACE_HOMEUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$HOMEUSER|g" "$FILE"
-FILE="$SCRIPT_DIR/home-manager/common-home.nix"
-STRING="REPLACE_NIX_VERSION"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
-FILE="$SCRIPT_DIR/home-manager/SYSUSER.nix"
-STRING="REPLACE_SYSUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
-FILE="$SCRIPT_DIR/home-manager/VIRTUSER.nix"
-STRING="REPLACE_VIRTUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
-FILE="$SCRIPT_DIR/home-manager/HOMEUSER.nix"
-STRING="REPLACE_HOMEUSER"
-grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+
 #### END sed
 ### END NIXOS REPLACE VARIABLES
 ## /boot
@@ -434,14 +454,17 @@ mkdir -p /mnt/boot
 
 # Install NixOS
 cd "$SCRIPT_DIR"
-nixos-generate-config --no-filesystems --root /mnt --dir ./nixos
+## Generate hardware-configuration.nix
+nixos-generate-config --no-filesystems --root /mnt --dir ./nixos/configs
 git config user.email "leo@meinel.dev"
 git config user.name "Leopold Johannes Meinel"
 git add .
 git commit -m "Generate hardware-configuration.nix"
+## Install NixOS
 nixos-install --no-root-password --flake ./#red
 git add .
 git commit -m "Generate installation files"
+## Transfer repo to system
 cd ~
 mkdir -p /mnt/etc/nixos
 mv "$SCRIPT_DIR" /mnt/etc/nixos

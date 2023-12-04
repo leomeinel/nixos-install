@@ -11,63 +11,31 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
+  # Imports
   imports = [ ];
 
+  # nixpkgs options
   nixpkgs = {
     overlays = [ ];
     config = { };
   };
 
-  programs.home-manager.enable = true;
-  programs.git = {
-    enable = true;
-    userEmail = "leo@meinel.dev";
-    userName = "Leopold Johannes Meinel";
-    signing.signByDefault = true;
-    delta = {
-      enable = true;
-      options = {
-        decorations = {
-          commit-decoration-style = "blue ol";
-          commit-style = "raw";
-          file-style = "omit";
-          hunk-header-decoration-style = "blue box";
-          hunk-header-file-style = "red";
-          hunk-header-line-number-style = "#067a00";
-          hunk-header-style = "file line-number syntax";
-        };
-        interactive.keep-plus-minus-markers = false;
-        navigate = true;
-        light = false;
-        features = "decorations";
-      };
-    };
-    extraConfig = {
-      core = {
-        editor = "nvim";
-        pager = "delta";
-        autocrlf = "input";
-      };
-      init.defaultBranch = "main";
-      pull.rebase = true;
-      merge.conflictstyle = "diff3";
-      diff.colorMoved = "default";
-      interactive.diffFilter = "delta --color-only --features=interactive";
-      add.interactive.useBuiltin = false;
-      credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
-    };
-  };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-  };
-
+  # Home options
   home = {
+    # Packages
     packages = with pkgs; [ ];
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "REPLACE_NIX_VERSION";
+    # Files in $HOME
+    file = {
+      "${config.xdg.configHome}" = {
+        source = "./files/.config";
+        recursive = true;
+      };
+      "post.sh" = {
+        source = "./files/scripts/post.sh";
+        executable = true;
+      };
+    };
+    # Activation script
     activation = {
       nixos-install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         # Create src
@@ -90,14 +58,60 @@
         nvim --headless -c 'sleep 5' -c 'q!' >/dev/null 2>&1
       '';
     };
-    file = {
-      "${config.xdg.configHome}" = {
-        source = "./.config";
-        recursive = true;
+    # State version
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    stateVersion = "REPLACE_NIX_VERSION";
+  };
+
+  # Program options
+  programs = {
+    home-manager.enable = true;
+    # neovim options
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+    };
+    # git options and config
+    git = {
+      enable = true;
+      userEmail = "leo@meinel.dev";
+      userName = "Leopold Johannes Meinel";
+      signing.signByDefault = true;
+      # git delta
+      delta = {
+        enable = true;
+        options = {
+          decorations = {
+            commit-decoration-style = "blue ol";
+            commit-style = "raw";
+            file-style = "omit";
+            hunk-header-decoration-style = "blue box";
+            hunk-header-file-style = "red";
+            hunk-header-line-number-style = "#067a00";
+            hunk-header-style = "file line-number syntax";
+          };
+          interactive.keep-plus-minus-markers = false;
+          navigate = true;
+          light = false;
+          features = "decorations";
+        };
       };
-      "post.sh" = {
-        source = "./scripts/post.sh";
-        executable = true;
+      # custom config
+      extraConfig = {
+        core = {
+          editor = "nvim";
+          pager = "delta";
+          autocrlf = "input";
+        };
+        init.defaultBranch = "main";
+        pull.rebase = true;
+        merge.conflictstyle = "diff3";
+        diff.colorMoved = "default";
+        interactive.diffFilter = "delta --color-only --features=interactive";
+        add.interactive.useBuiltin = false;
+        credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
       };
     };
   };

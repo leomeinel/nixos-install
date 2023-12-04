@@ -11,12 +11,15 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
-  imports = [ ./common-home.nix ];
+  # Imports
+  imports = [ ../common-home.nix ];
 
+  # Additional git options
+  programs.git.signing.key = "2D39C0733D0EF05E";
+
+  # Home options
   home = {
     username = "root";
     homeDirectory = "/root";
   };
-
-  programs.git.signing.key = "2D39C0733D0EF05E";
 }

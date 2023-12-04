@@ -9,12 +9,14 @@
 */
 
 { inputs, outputs, ... }: {
+  # Imports
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
-
+  # home-manager options
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
+    # Import user configs
     users = {
       root = import ../home-manager/ROOTUSER.nix;
       REPLACE_SYSUSER = import ../home-manager/SYSUSER.nix;
