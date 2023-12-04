@@ -17,7 +17,6 @@
     # nixpkgs
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     nixpkgs.url = "github:nixos/nixpkgs/nixos-REPLACE_NIX_VERSION";
-
     # home-manager
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     home-manager.url = "github:nix-community/home-manager/release-REPLACE_NIX_VERSION";

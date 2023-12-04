@@ -22,6 +22,9 @@
 
   # Home options
   home = {
+    # State version
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    stateVersion = "REPLACE_NIX_VERSION";
     # Packages
     packages = with pkgs; [ ];
     # Files in $HOME
@@ -58,9 +61,6 @@
         nvim --headless -c 'sleep 5' -c 'q!' >/dev/null 2>&1
       '';
     };
-    # State version
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "REPLACE_NIX_VERSION";
   };
 
   # Program options
