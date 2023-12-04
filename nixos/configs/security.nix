@@ -38,7 +38,13 @@
       ];
       # Services in /etc/pam.d/
       services = {
-        "passwd".source = lib.mkForce ("./files/etc/pam.d/passwd");
+        "passwd".text = lib.mkForce (
+          ''
+            # passwd defaults from nixos-install
+            password required pam_pwquality.so shadowretry=3 minlen=12 difok=6 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root
+            password required pam_unix.so use_authtok shadow
+          ''
+        );
         "system-login".text = lib.mkDefault (
           lib.mkAfter ''
             auth optional pam_faildelay.so delay=8000000
