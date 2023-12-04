@@ -1,5 +1,5 @@
 /*
-  * File: home.nix
+  * File: HOMEUSER.nix
   * Author: Leopold Meinel (leo@meinel.dev)
   * -----
   * Copyright (c) 2023 Leopold Meinel & contributors
@@ -11,6 +11,10 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "REPLACE_NIX_VERSION";
+  imports = [ "./common-home.nix" ];
+
+  home = {
+    username = "REPLACE_HOMEUSER";
+    homeDirectory = "/home/REPLACE_HOMEUSER";
+  };
 }
