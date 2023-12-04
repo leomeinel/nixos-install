@@ -287,6 +287,12 @@ for link in /dev/disk/by-uuid/*; do
     if [[ "$(readlink -f "$link")" = "$(readlink -f "$LV3")" ]]; then
         LV3_UUID_LINK="$link"
     fi
+    if [[ "$(readlink -f "$link")" = "$(readlink -f "$DISK1P1")" ]]; then
+        DISK1P1_UUID_LINK="$link"
+    fi
+    if [[ -n "$DISK2" ]] && [[ "$(readlink -f "$link")" = "$(readlink -f "$DISK2P1")" ]]; then
+        DISK2P1_UUID_LINK="$link"
+    fi
 done
 read -rd '\0' STRUCTURE <<EOF
 "REPLACE_SUBVOLUME" = {
@@ -323,19 +329,19 @@ done
 chmod 775 /mnt/var/games
 ## /efi
 OPTIONS4="noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077"
-mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK1P1" /mnt/efi
+mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK1P1_UUID_LINK" /mnt/efi
 ### START NIXOS CODEGEN
 APPEND="$(echo "${STRUCTURE/"REPLACE_SUBVOLUME"/"/efi"}")"
-APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$DISK1P1"}")"
+APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$DISK1P1_UUID_LINK"}")"
 APPEND="$(echo "${APPEND/"btrfs"/"vfat"}")"
 APPEND="$(echo "${APPEND/"REPLACE_OPTIONS"/"$(echo "${OPTIONS4//","/"\" \""}")"}")"
 CODEGEN="$CODEGEN$APPEND"$'\n'""
 ### END NIXOS CODEGEN
 if [[ -n "$DISK2" ]]; then
-    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1" /mnt/.efi.b
+    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1_UUID_LINK" /mnt/.efi.b
     ### START NIXOS CODEGEN
     APPEND="$(echo "${STRUCTURE/"REPLACE_SUBVOLUME"/"/efi"}")"
-    APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$DISK1P1"}")"
+    APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$DISK2P1_UUID_LINK"}")"
     APPEND="$(echo "${APPEND/"btrfs"/"vfat"}")"
     APPEND="$(echo "${APPEND/"REPLACE_OPTIONS"/"$(echo "${OPTIONS4//","/"\" \""}")"" \"noauto"}")"
     CODEGEN="$CODEGEN$APPEND"$'\n'""
