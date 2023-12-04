@@ -338,7 +338,7 @@ APPEND="$(echo "${APPEND/"REPLACE_OPTIONS"/"$(echo "${OPTIONS4//","/"\" \""}")"}
 CODEGEN="$CODEGEN$APPEND"$'\n'""
 ### END NIXOS CODEGEN
 if [[ -n "$DISK2" ]]; then
-    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1_UUID_LINK" /mnt/.efi.b
+    mount --mkdir -o noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077 "$DISK2P1_UUID_LINK" /mnt/.efi.bak
     ### START NIXOS CODEGEN
     APPEND="$(echo "${STRUCTURE/"REPLACE_SUBVOLUME"/"/efi"}")"
     APPEND="$(echo "${APPEND/"REPLACE_DEVICE"/"$DISK2P1_UUID_LINK"}")"
