@@ -337,58 +337,58 @@ awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FI
 FILE="$SCRIPT_DIR/flake.nix"
 STRING="REPLACE_NIX_VERSION"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$NIX_VERSION/g" "$FILE"
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 STRING="REPLACE_HOSTNAME"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$HOSTNAME/g" "$FILE"
+sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="REPLACE_HOSTNAME"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$HOSTNAME/g" "$FILE"
+sed -i "s|$STRING|$HOSTNAME|g" "$FILE"
 STRING="REPLACE_DOMAIN"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$DOMAIN/g" "$FILE"
+sed -i "s|$STRING|$DOMAIN|g" "$FILE"
 STRING="REPLACE_NETWORK_INTERFACE"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$NETWORK_INTERFACE/g" "$FILE"
+sed -i "s|$STRING|$NETWORK_INTERFACE|g" "$FILE"
 STRING="REPLACE_IPV6_ADDRESS"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$IPV6_ADDRESS/g" "$FILE"
+sed -i "s|$STRING|$IPV6_ADDRESS|g" "$FILE"
 STRING="REPLACE_TIMEZONE"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$TIMEZONE/g" "$FILE"
+sed -i "s|$STRING|$TIMEZONE|g" "$FILE"
 STRING="REPLACE_KEYMAP"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$KEYMAP/g" "$FILE"
+sed -i "s|$STRING|$KEYMAP|g" "$FILE"
 STRING="REPLACE_INITIAL_PASSWORD"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$INITIAL_PASSWORD/g" "$FILE"
+sed -i "s|$STRING|$INITIAL_PASSWORD|g" "$FILE"
 STRING="REPLACE_SYSUSER_PUBKEY"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$SYSUSER_PUBKEY/g" "$FILE"
+sed -i "s|$STRING|$SYSUSER_PUBKEY|g" "$FILE"
 STRING="REPLACE_VIRTUSER_PUBKEY"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$VIRTUSER_PUBKEY/g" "$FILE"
+sed -i "s|$STRING|$VIRTUSER_PUBKEY|g" "$FILE"
 STRING="REPLACE_HOMEUSER_PUBKEY"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$HOMEUSER_PUBKEY/g" "$FILE"
+sed -i "s|$STRING|$HOMEUSER_PUBKEY|g" "$FILE"
 STRING="REPLACE_NIX_VERSION"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$NIX_VERSION/g" "$FILE"
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 FILE="$SCRIPT_DIR/nixos/home-manager.nix"
 STRING="REPLACE_SYSUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$SYSUSER/g" "$FILE"
+sed -i "s|$STRING|$SYSUSER|g" "$FILE"
 STRING="REPLACE_VIRTUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$VIRTUSER/g" "$FILE"
+sed -i "s|$STRING|$VIRTUSER|g" "$FILE"
 STRING="REPLACE_HOMEUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$HOMEUSER/g" "$FILE"
+sed -i "s|$STRING|$HOMEUSER|g" "$FILE"
 FILE="$SCRIPT_DIR/home-manager/home.nix"
 STRING="REPLACE_NIX_VERSION"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s/$STRING/$NIX_VERSION/g" "$FILE"
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 #### START sed
 ### END NIXOS CODEGEN
 ## /boot
