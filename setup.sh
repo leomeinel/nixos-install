@@ -430,6 +430,7 @@ git commit -m "Generate hardware-configuration.nix"
 nixos-install --no-root-password --flake ./#red
 git add .
 git commit -m "Generate installation files"
+cd ~
 mkdir -p /mnt/etc/nixos
-mv "$SCRIPT_DIR/*" /mnt/etc/nixos
+mv "$SCRIPT_DIR"/* /mnt/etc/nixos
 umount -AR /mnt
