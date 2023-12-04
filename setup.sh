@@ -326,8 +326,7 @@ if [[ -n "$DISK2" ]]; then
     ### END NIXOS CODEGEN
 fi
 ### START NIXOS CODEGEN
-CODEGEN="$(echo $CODEGEN | perl -pe 's/(?<!")\/"/"/')"
-
+CODEGEN="$(echo $CODEGEN | perl -pe 's/(?<!")\/"/"/g')"
 #### START awk
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="^      # CODEGEN: fileSystems #"
