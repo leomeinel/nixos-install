@@ -71,7 +71,7 @@
       enable = true;
       userEmail = "leo@meinel.dev";
       userName = "Leopold Johannes Meinel";
-      signing.signByDefault = true;
+      #signing.signByDefault = true;
       # git delta
       delta = {
         enable = true;

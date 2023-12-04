@@ -15,7 +15,7 @@
   imports = [ ../common-home.nix ];
 
   # Additional git options
-  programs.git.signing.key = "2D39C0733D0EF05E";
+  #programs.git.signing.key = "2D39C0733D0EF05E";
 
   # Home options
   home = {
