@@ -352,7 +352,7 @@ fi
 CODEGEN="$(echo $CODEGEN | perl -pe 's/(?<!")\/"/"/g')"
 #### START awk
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
-STRING="^      # CODEGEN: fileSystems #"
+STRING="^    # CODEGEN: fileSystems #"
 grep -q "$STRING" "$FILE" || awk_exit
 awk -v replacement="$CODEGEN" '{gsub(/'"$STRING"'/,replacement)}1' "$FILE" >"$FILE.tmp" &&
     mv "$FILE.tmp" "$FILE"
