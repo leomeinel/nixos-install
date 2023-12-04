@@ -18,10 +18,10 @@
     extraSpecialArgs = { inherit inputs outputs; };
     # Import user configs
     users = {
-      root = import ../home-manager/ROOTUSER.nix;
-      REPLACE_SYSUSER = import ../home-manager/SYSUSER.nix;
-      REPLACE_VIRTUSER = import ../home-manager/VIRTUSER.nix;
-      REPLACE_HOMEUSER = import ../home-manager/HOMEUSER.nix;
+      root = import ../../home-manager/configs/ROOTUSER.nix;
+      REPLACE_SYSUSER = import ../../home-manager/configs/SYSUSER.nix;
+      REPLACE_VIRTUSER = import ../../home-manager/configs/VIRTUSER.nix;
+      REPLACE_HOMEUSER = import ../../home-manager/configs/HOMEUSER.nix;
     };
   };
 }
