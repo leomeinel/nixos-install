@@ -33,10 +33,6 @@
         source = ./files/.config;
         recursive = true;
       };
-      "post.sh" = {
-        source = ./files/scripts/post.sh;
-        executable = true;
-      };
     };
     # Activation script
     activation = {

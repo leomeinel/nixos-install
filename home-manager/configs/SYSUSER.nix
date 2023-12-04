@@ -21,5 +21,9 @@
   home = {
     username = "REPLACE_SYSUSER";
     homeDirectory = "/home/REPLACE_SYSUSER";
+    file."post.sh" = {
+      source = ../files/scripts/post.sh;
+      executable = true;
+    };
   };
 }
