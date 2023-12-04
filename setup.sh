@@ -411,8 +411,20 @@ sed -i "s|$STRING|$VIRTUSER|g" "$FILE"
 STRING="REPLACE_HOMEUSER"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$HOMEUSER|g" "$FILE"
-FILE="$SCRIPT_DIR/home-manager/home.nix"
+FILE="$SCRIPT_DIR/home-manager/common-home.nix"
 STRING="REPLACE_NIX_VERSION"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+FILE="$SCRIPT_DIR/home-manager/SYSUSER.nix"
+STRING="REPLACE_SYSUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+FILE="$SCRIPT_DIR/home-manager/VIRTUSER.nix"
+STRING="REPLACE_VIRTUSER"
+grep -q "$STRING" "$FILE" || sed_exit
+sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+FILE="$SCRIPT_DIR/home-manager/HOMEUSER.nix"
+STRING="REPLACE_HOMEUSER"
 grep -q "$STRING" "$FILE" || sed_exit
 sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 #### END sed
