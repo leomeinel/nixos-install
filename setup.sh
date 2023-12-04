@@ -377,17 +377,17 @@ sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
 FILE="$SCRIPT_DIR/home-manager/configs/SYSUSER.nix"
 STRING="REPLACE_SYSUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+sed -i "s|$STRING|$SYSUSER|g" "$FILE"
 ##### home-manager/configs/VIRTUSER.nix
 FILE="$SCRIPT_DIR/home-manager/configs/VIRTUSER.nix"
 STRING="REPLACE_VIRTUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+sed -i "s|$STRING|$VIRTUSER|g" "$FILE"
 ##### home-manager/configs/HOMEUSER.nix
 FILE="$SCRIPT_DIR/home-manager/configs/HOMEUSER.nix"
 STRING="REPLACE_HOMEUSER"
 grep -q "$STRING" "$FILE" || sed_exit
-sed -i "s|$STRING|$NIX_VERSION|g" "$FILE"
+sed -i "s|$STRING|$HOMEUSER|g" "$FILE"
 ##### nixos/configuration.nix
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
 STRING="REPLACE_NETWORK_INTERFACE"
