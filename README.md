@@ -24,6 +24,7 @@ Meant for cloud servers that are mainly hosting podman.
 sudo -i
 nix-env -iA nixos.git
 git clone https://github.com/leomeinel/nixos-install.git
+vim /root/nixos-install/install.conf # Replace IPV6_ADDRESS
 chmod +x /root/nixos-install/setup.sh
 /root/nixos-install/setup.sh
 reboot
