@@ -56,9 +56,6 @@
         mkdir -p "$XDG_STATE_HOME"/r
         mkdir -p "$XDG_DATA_HOME"/gnupg
         chmod 700 "$XDG_DATA_HOME"/gnupg
-
-        # Initialize nvim
-        nvim --headless -c 'sleep 5' -c 'q!' >/dev/null 2>&1
       '';
     };
   };
