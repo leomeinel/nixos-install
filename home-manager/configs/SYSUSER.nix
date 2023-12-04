@@ -25,5 +25,12 @@
       source = ../files/scripts/post.sh;
       executable = true;
     };
+    # Activation script
+    activation = {
+      sysuser = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        # Create backup directory
+        mkdir -p ~/backup
+      '';
+    };
   };
 }

@@ -36,7 +36,7 @@
     };
     # Activation script
     activation = {
-      nixos-install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      common-home = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         # Create src
         mkdir -p ~/src
         chmod 700 ~/src
