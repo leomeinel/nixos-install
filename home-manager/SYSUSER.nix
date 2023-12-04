@@ -11,7 +11,7 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
-  imports = [ "./common-home.nix" ];
+  imports = [ ./common-home.nix ];
 
   home = {
     username = "REPLACE_SYSUSER";
