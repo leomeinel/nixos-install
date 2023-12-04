@@ -271,15 +271,13 @@ mount_subs1() {
 }
 ### START NIXOS CODEGEN
 read -rd '\0' STRUCTURE <<EOF
-      "REPLACE_SUBVOLUME" = {
-        device = "REPLACE_DEVICE";
-        fsType = "btrfs";
-        options = [ "REPLACE_OPTIONS" ];
-      };
+"REPLACE_SUBVOLUME" = {
+  device = "REPLACE_DEVICE";
+  fsType = "btrfs";
+  options = [ "REPLACE_OPTIONS" ];
+};
 \0
 EOF
-#### FIXME: Find a way to not have to indent the first line here
-STRUCTURE="$(echo "${STRUCTURE/"\"REPLACE_SUBVOLUME\""/"      \"REPLACE_SUBVOLUME\""}")"
 ### END NIXOS CODEGEN
 for ((i = 0; i < SUBVOLUMES_LENGTH; i++)); do
     case "${SUBVOLUMES[$i]}" in
@@ -326,6 +324,7 @@ if [[ -n "$DISK2" ]]; then
     ### END NIXOS CODEGEN
 fi
 ### START NIXOS CODEGEN
+### NOTE: It seems like perl doesn't like my multiline code
 CODEGEN="$(echo $CODEGEN | perl -pe 's/(?<!")\/"/"/g')"
 #### START awk
 FILE="$SCRIPT_DIR/nixos/configuration.nix"
