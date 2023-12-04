@@ -462,7 +462,7 @@ git add .
 git commit -m "Generate hardware-configuration.nix"
 rm -f "$SCRIPT_DIR"/nixos/configs/configuration.nix
 ## Install NixOS
-nixos-install --no-root-password --flake "$SCRIPT_DIR"/#red
+nixos-install --no-root-password --show-trace --flake "$SCRIPT_DIR"/#red
 git add .
 git commit -m "Generate installation files"
 ## Transfer repo to system
