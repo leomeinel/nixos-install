@@ -433,5 +433,5 @@ git commit -m "Generate installation files"
 cd ~
 mkdir -p /mnt/etc/nixos
 mv "$SCRIPT_DIR" /mnt/etc/nixos
-ln -s /etc/nixos-install/flake.nix /mnt/etc/flake.nix
+ln -s /etc/nixos/nixos-install/flake.nix /mnt/etc/nixos/flake.nix
 umount -AR /mnt
