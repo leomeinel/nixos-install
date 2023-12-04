@@ -64,7 +64,6 @@
       ethtool
       eza
       fd
-      git-extras
       glow
       gptfdisk
       hwinfo
