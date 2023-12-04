@@ -54,51 +54,51 @@
       R_ENVIRON_USER = "${XDG_CONFIG_HOME}/r/.Renviron";
       RUSTUP_HOME = "${XDG_DATA_HOME}/rustup";
     };
+    ## Define packages
+    systemPackages = with pkgs; [
+      bat
+      bc
+      dosfstools
+      du-dust
+      duf
+      ethtool
+      eza
+      fd
+      git-extras
+      glow
+      gptfdisk
+      hwinfo
+      hyperfine
+      inetutils
+      jpegoptim
+      jq
+      libpwquality
+      lrzip
+      lshw
+      lsof
+      lzop
+      macchina
+      mtools
+      netcat-openbsd
+      ntfs3g
+      oxipng
+      p7zip
+      perl
+      podman-compose
+      procs
+      quilt
+      rename
+      ripgrep
+      rsync
+      screen
+      tokei
+      tree
+      unar
+      unixtools.xxd
+      unzip
+      wget
+      xdg-ninja
+      yq
+    ];
   };
-  ## Define packages
-  systemPackages = with pkgs; [
-    bash-completion
-    bat
-    bc
-    dosfstools
-    du-dust
-    duf
-    ethtool
-    eza
-    fd
-    git-extras
-    glow
-    gptfdisk
-    hwinfo
-    hyperfine
-    inetutils
-    jpegoptim
-    jq
-    libpwquality
-    lrzip
-    lshw
-    lsof
-    lzop
-    macchina
-    mtools
-    netcat-openbsd
-    ntfs3g
-    oxipng
-    p7zip
-    podman-compose
-    procs
-    quilt
-    rename
-    ripgrep
-    rsync
-    screen
-    tokei
-    tree
-    unar
-    unixtools.xxd
-    unzip
-    wget
-    xdg-ninja
-    yq
-  ];
 }
