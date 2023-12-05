@@ -38,3 +38,7 @@ fi
 doas nixos-rebuild switch --flake "$SCRIPT_DIR"/#red
 git add .
 git commit -m "Rebuild system"
+
+# Run post.sh
+[[ -f ~/post.sh ]] &&
+    ~/post.sh
