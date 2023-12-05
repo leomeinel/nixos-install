@@ -18,6 +18,7 @@
     ssh.startAgent = true;
     starship.enable = true;
     htop.enable = true;
+    git.enable = true;
     nano.enable = false;
     # Bash options
     bash = {
