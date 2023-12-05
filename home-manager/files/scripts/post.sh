@@ -11,9 +11,6 @@
 
 # FIXME: This file shouldn't have to exist and limits reproducibility
 
-# Set $SCRIPT_DIR
-SCRIPT_DIR="$(dirname -- "$(readlink -f -- "$0")")"
-
 # Fail on error
 set -e
 
