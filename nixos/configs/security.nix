@@ -21,7 +21,7 @@
       enable = true;
       extraRules = [{
         persist = true;
-        setEnv = [ "LANG" "LC_ALL" ];
+        setEnv = [ "LANG" "LC_ALL" "LOCALE_ARCHIVE" ];
         groups = [ "wheel" ];
       }];
     };

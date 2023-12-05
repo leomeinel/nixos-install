@@ -86,7 +86,8 @@
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" ];
     extraLocaleSettings = {
-      LANGUAGE = "en_US.UTF-8:en_US:en:C";
+      LANGUAGE = "en_US.UTF-8";
+      LC_ALL = "en_US.UTF-8";
       LC_ADDRESS = "en_US.UTF-8";
       LC_COLLATE = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
