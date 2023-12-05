@@ -20,7 +20,7 @@ DATE="$(date +"%F-%H")"
 
 # Backup flake.lock
 if [[ -f /etc/nixos/flake.nix ]] && [[ ! -f "$SCRIPT_DIR"/flake.lock ]]; then
-    rsync --exclude ".git" /etc/nixos/nixos-install/ "$SCRIPT_DIR"/ &&
+    rsync -rp --exclude ".git" /etc/nixos/nixos-install/ "$SCRIPT_DIR"/ &&
         doas rm -rf /etc/nixos/*
     git add .
     git commit -m "Copy repo from /etc/nixos/nixos-install/"
