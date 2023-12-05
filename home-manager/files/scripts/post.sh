@@ -21,4 +21,4 @@ set -e
 doas sh -c 'usbguard generate-policy >/var/lib/usbguard/rules.conf'
 
 # Remove script
-rm -f "$SCRIPT_DIR"/post.sh
+unlink "$SCRIPT_DIR"/post.sh
