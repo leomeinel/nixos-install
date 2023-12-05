@@ -37,4 +37,4 @@ fi
 # Update current NixOS system
 doas nixos-rebuild switch --flake "$SCRIPT_DIR"/#red
 git add .
-git commit -m "Generate installation files"
+git commit -m "Rebuild system"
