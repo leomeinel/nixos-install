@@ -11,6 +11,7 @@
 
 # Set $SCRIPT_DIR
 SCRIPT_DIR="$(dirname -- "$(readlink -f -- "$0")")"
+cd "$SCRIPT_DIR"
 
 # Fail on error
 set -e
@@ -35,7 +36,7 @@ else
 fi
 
 # Update current NixOS system
-doas nixos-rebuild switch --flake "$SCRIPT_DIR"/#red
+doas nixos-rebuild switch --flake "$SCRIPT_DIR"
 git add .
 git commit -m "Rebuild system"
 

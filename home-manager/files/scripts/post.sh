@@ -19,6 +19,3 @@ set -e
 
 # Generate usbguard allow-policy for connected devices
 doas sh -c 'usbguard generate-policy >/var/lib/usbguard/rules.conf'
-
-# Remove script
-unlink "$SCRIPT_DIR"/post.sh
