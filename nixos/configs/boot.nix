@@ -33,7 +33,7 @@
       install sctp /bin/true
       install tipc /bin/true
     '';
-    # EFI boot options
+    # EFI boot options (/etc/loader/loader.conf)
     loader = {
       timeout = 4;
       efi = {

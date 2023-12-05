@@ -16,7 +16,7 @@
     # Select programs
     auditd.enable = true;
     sudo.enable = false;
-    # doas options
+    # doas options (/etc/doas.conf)
     doas = {
       enable = true;
       extraRules = [{
@@ -66,7 +66,7 @@
     #  };
     #};
     # FIXME: /etc/audit/auditd.conf
-    # Audit options
+    # audit options (/etc/audit/audit.rules)
     audit = {
       enable = true;
       rules = [

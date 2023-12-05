@@ -18,12 +18,12 @@
     qemuGuest.enable = true;
     logrotate.enable = true;
     sysstat.enable = true;
-    # usbguard options
+    # usbguard options (/etc/usbguard/usbguard.conf)
     usbguard = {
       enable = true;
       IPCAllowedGroups = [ "usbguard" ];
     };
-    # postfix options
+    # postfix options (/etc/postfix/main.cf)
     postfix = {
       enable = true;
       extraConfig = ''

@@ -25,9 +25,8 @@
       enable = true;
       defaultEditor = true;
       vimAlias = true;
-      vimdiffAlias = true;
     };
-    # Bash options
+    # bash options
     bash = {
       enableCompletion = true;
       # Equivalent to .bashrc for interactive sessions

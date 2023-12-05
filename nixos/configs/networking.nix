@@ -13,6 +13,9 @@
 {
   # Networking options
   networking = {
+    # Select programs
+    useNetworkd = true;
+    useDHCP = false;
     # https://www.rfc-editor.org/rfc/rfc1178.html
     # Network devices: elements
     # Servers: colors
@@ -20,10 +23,7 @@
     hostName = "REPLACE_HOSTNAME";
     # https://www.rfc-editor.org/rfc/rfc8375.html
     domain = "REPLACE_DOMAIN";
-    # Select programs
-    useNetworkd = true;
-    useDHCP = false;
-    # Firewall
+    # Firewall (iptables)
     firewall = {
       enable = true;
       # Select ports

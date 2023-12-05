@@ -53,14 +53,14 @@
     };
   };
 
-  # Equivalent to /etc/systemd/zram-generator.conf
+  # zram options (/etc/systemd/zram-generator.conf)
   zramSwap = {
     enable = true;
     memoryPercent = 100;
     algorithm = "zstd";
   };
 
-  # systemd options
+  # systemd options (/etc/systemd/)
   systemd = {
     coredump.enable = false;
     network = {
@@ -80,8 +80,11 @@
   };
 
   # Region options
+  ## Equivalent to (/etc/vconsole.conf)
   console.keyMap = "REPLACE_KEYMAP";
+  ## Equivalent to (/etc/localtime)
   time.timeZone = "REPLACE_TIMEZONE";
+  ## Equivalent to (/etc/locale.conf)
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" ];

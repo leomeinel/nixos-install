@@ -14,7 +14,7 @@
   # Imports
   imports = [ ];
 
-  # nixpkgs options
+  # Nixpkgs options
   nixpkgs = {
     overlays = [ ];
     config = { };
@@ -66,7 +66,7 @@
       vimAlias = true;
       vimdiffAlias = true;
     };
-    # git options and config
+    # git options and config (.config/git/config)
     git = {
       enable = true;
       userEmail = "leo@meinel.dev";
