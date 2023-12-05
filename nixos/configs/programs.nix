@@ -20,6 +20,13 @@
     htop.enable = true;
     git.enable = true;
     nano.enable = false;
+    # neovim options
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+    };
     # Bash options
     bash = {
       enableCompletion = true;
