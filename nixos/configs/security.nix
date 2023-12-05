@@ -25,43 +25,47 @@
         groups = [ "wheel" ];
       }];
     };
+    # FIXME: Find a way to implement these
+    #        Issue: https://discourse.nixos.org/t/enforcing-strong-passwords-on-nixos-pam-pwquality-so-module-not-known/36420
+    # FIXME: /etc/security/faillock.conf
     # pam options
-    pam = {
-      # Equivalent to /etc/security/limits.conf
-      loginLimits = [
-        {
-          domain = "*";
-          type = "hard";
-          item = "core";
-          value = "0";
-        }
-      ];
-      # Services in /etc/pam.d/
-      services = {
-        "passwd".text = lib.mkForce (
-          ''
-            # passwd defaults from nixos-install
-            password required pam_pwquality.so shadowretry=3 minlen=12 difok=6 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root
-            password required pam_unix.so use_authtok shadow
-          ''
-        );
-        "system-login".text = lib.mkDefault (
-          lib.mkAfter ''
-            auth optional pam_faildelay.so delay=8000000
-          ''
-        );
-        "su".text = lib.mkDefault (
-          lib.mkAfter ''
-            auth required pam_wheel.so use_uid
-          ''
-        );
-        "su-l".text = lib.mkDefault (
-          lib.mkAfter ''
-            auth required pam_wheel.so use_uid
-          ''
-        );
-      };
-    };
+    #pam = {
+    #  # Equivalent to /etc/security/limits.conf
+    #  loginLimits = [
+    #    {
+    #      domain = "*";
+    #      type = "hard";
+    #      item = "core";
+    #      value = "0";
+    #    }
+    #  ];
+    #  # Services in /etc/pam.d/
+    #  services = {
+    #    "passwd".text = lib.mkForce (
+    #      ''
+    #        # passwd defaults from nixos-install
+    #        password required pam_pwquality.so shadowretry=3 minlen=12 difok=6 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 enforce_for_root
+    #        password required pam_unix.so use_authtok shadow
+    #      ''
+    #    );
+    #    "system-login".text = lib.mkDefault (
+    #      lib.mkAfter ''
+    #        auth optional pam_faildelay.so delay=8000000
+    #      ''
+    #    );
+    #    "su".text = lib.mkDefault (
+    #      lib.mkAfter ''
+    #        auth required pam_wheel.so use_uid
+    #      ''
+    #    );
+    #    "su-l".text = lib.mkDefault (
+    #      lib.mkAfter ''
+    #        auth required pam_wheel.so use_uid
+    #      ''
+    #    );
+    #  };
+    #};
+    # FIXME: /etc/audit/auditd.conf
     # Audit options
     audit = {
       enable = true;
