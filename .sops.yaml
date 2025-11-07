@@ -1,0 +1,9 @@
+keys:
+  - &gpg_tulip_default F0A7BB97CAF49D8CB058BB0A744FDDD73AECC993
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - pgp:
+          - *gpg_tulip_default
+        age:
