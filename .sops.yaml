@@ -1,5 +1,6 @@
 keys:
   - &gpg_tulip_default F0A7BB97CAF49D8CB058BB0A744FDDD73AECC993
+  - &host_key REPLACE_INVALID
 
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
@@ -7,6 +8,13 @@ creation_rules:
       - pgp:
           - *gpg_tulip_default
         age:
+          - *host_key
+  - path_regex: secrets/files/.*/.*$
+    key_groups:
+      - pgp:
+          - *gpg_tulip_default
+        age:
+          - *host_key
 
 stores:
   json:
