@@ -59,7 +59,12 @@
       certbot-start = {
         description = "Start podman-certbot.service";
         serviceConfig.Type = "exec";
-        after = [ "network.target" ];
+        wantedBy = [
+          "multi-user.target"
+        ];
+        after = [
+          "network.target"
+        ];
         script = ''
           # Update certificates
           ${pkgs.systemd}/bin/systemctl start podman-certbot.service
