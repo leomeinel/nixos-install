@@ -188,7 +188,6 @@
         onFailure = [
           "monitor-updates-log-failure.service"
         ];
-        # https://blog.tjll.net/previewing-nixos-system-updates/
         script = ''
           # Fail on error
           set -euo pipefail
@@ -255,7 +254,6 @@
         onFailure = [
           "monitor-container-updates-log-failure.service"
         ];
-        # https://blog.tjll.net/previewing-nixos-system-updates/
         script = ''
           # Fail on error
           set -euo pipefail
