@@ -278,7 +278,7 @@
                   fi
               done
               [[ -z "''${MATCHES}" ]] &&
-                  UPDATES+=("''${IMAGES_LOCAL[''${i}]} -> ''${IMAGES_REMOTE[''${i}]}")
+                  UPDATES+=("''${IMAGES_REMOTE[''${i}]}")
           done
           UPDATES_LENGTH="''${#UPDATES[@]}"
 
