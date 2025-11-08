@@ -7,3 +7,11 @@ creation_rules:
       - pgp:
           - *gpg_tulip_default
         age:
+
+stores:
+  json:
+    indent: 2
+  json_binary:
+    indent: 2
+  yaml:
+    indent: 2
