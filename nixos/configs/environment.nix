@@ -46,6 +46,7 @@
       mtools
       netcat-openbsd
       ntfs3g
+      nvd
       openssl
       oxipng
       p7zip

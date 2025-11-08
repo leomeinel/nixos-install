@@ -200,12 +200,12 @@
           ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-updates" -F "priority=0" -F "message=Started monitoring updates" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-updates.pass)"
 
           # Get ''${UPDATES[@]}
-          TEMP_DIR=$(${pkgs.coreutils-full}/bin/mktemp -d /tmp/monitor-updates.service-XXXXXX)
-          ${pkgs.git}/bin/git clone --reference /root/src/nixos-install /root/src/nixos-install "''${TEMP_DIR}"
-          cd "''${TEMP_DIR}"
+          TMP_DIR="$(${pkgs.coreutils-full}/bin/mktemp -d /tmp/monitor-updates.service-XXXXXX)"
+          ${pkgs.git}/bin/git clone --reference /root/src/nixos-install /root/src/nixos-install "''${TMP_DIR}"
+          cd "''${TMP_DIR}"
           ${pkgs.nix}/bin/nix flake lock --update-input nixpkgs
-          ${pkgs.nix}/bin/nix build ".#nixosConfigurations.$(hostname).config.system.build.toplevel"
-          readarray -t UPDATES < <(${pkgs.nix}/bin/nix store diff-closures /run/current-system ./result | ${pkgs.gawk}/bin/awk '/[0-9] →|→ [0-9]/ && !/nixos/' || ${pkgs.coreutils-full}/bin/echo)
+          ${pkgs.nix}/bin/nix build ".#nixosConfigurations.${installEnv.HOSTNAME}.config.system.build.toplevel"
+          readarray -t UPDATES < <(${pkgs.nvd}/bin/nvd --color=never --version-highlight=none diff /run/current-system ./result | grep "^\[[A-Z]" | awk '{print $3}')
           UPDATES_LENGTH="''${#UPDATES[@]}"
 
           # List number of outdated packages
@@ -215,8 +215,8 @@
               ${pkgs.curl}/bin/curl -s -F "title=''${UPDATES_LENGTH} packages are out of date!" -F "priority=10" -F "message=''${MESSAGE}" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-updates.pass)"
           fi
 
-          # Remove TEMP_DIR
-          ${pkgs.coreutils-full}/bin/rm -rf "''${TEMP_DIR}"
+          # Remove TMP_DIR
+          ${pkgs.coreutils-full}/bin/rm -rf "''${TMP_DIR}"
         '';
       };
       monitor-updates-log-success = {
