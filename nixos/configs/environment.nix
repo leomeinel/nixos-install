@@ -71,6 +71,96 @@
       "issue".source = ../files/etc/issue;
       "issue.net".source = ../files/etc/issue.net;
       "motd".source = ../files/etc/motd;
+      # Containers
+      ## volumes
+      "containers/src/volumes/certs-reverse-proxy/certs.sh" = {
+        source = ../files/containers/volumes/certs-reverse-proxy/certs.sh;
+        mode = "0500";
+      };
+      "containers/src/volumes/nginx/includes/common.conf" = {
+        source = ../files/containers/volumes/nginx/includes/common.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/fastcgi-headers.conf" = {
+        source = ../files/containers/volumes/nginx/includes/fastcgi-headers.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/fastcgi.conf" = {
+        source = ../files/containers/volumes/nginx/includes/fastcgi.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/headers-all.conf" = {
+        source = ../files/containers/volumes/nginx/includes/headers-all.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/headers-apache-answer.conf" = {
+        source = ../files/containers/volumes/nginx/includes/headers-apache-answer.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/headers-home-assistant.conf" = {
+        source = ../files/containers/volumes/nginx/includes/headers-home-assistant.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/headers-trilium.conf" = {
+        source = ../files/containers/volumes/nginx/includes/headers-trilium.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/proxy-headers.conf" = {
+        source = ../files/containers/volumes/nginx/includes/proxy-headers.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/redirect.conf" = {
+        source = ../files/containers/volumes/nginx/includes/redirect.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/restrict-to-local.conf" = {
+        source = ../files/containers/volumes/nginx/includes/restrict-to-local.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/ssl-cloudflare.conf" = {
+        source = ../files/containers/volumes/nginx/includes/ssl-cloudflare.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/includes/ssl.conf" = {
+        source = ../files/containers/volumes/nginx/includes/ssl.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/nginx/nginx.conf" = {
+        source = ../files/containers/volumes/nginx/nginx.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
+      "containers/src/volumes/reverse-proxy/conf.d/sites-enabled/reverse-proxy.conf" = {
+        source = ../files/containers/volumes/reverse-proxy/conf.d/sites-enabled/reverse-proxy.conf;
+        mode = "0400";
+        uid = 101;
+        gid = 101;
+      };
     };
     # Session variables
     sessionVariables = rec {

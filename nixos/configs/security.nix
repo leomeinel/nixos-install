@@ -23,7 +23,7 @@ let
 
     # notify-log
     if [ "''${PAM_TYPE}" = "open_session" ]; then
-        ${pkgs.curl}/bin/curl -s -F "title=''${PAM_USER}@${installEnv.HOSTNAME}: SSH login" -F "priority=10" -F "message=From: ''${PAM_RHOST}" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /etc/access/keys/gotify-${installEnv.HOSTNAME}-ssh-login.pass)"
+        ${pkgs.curl}/bin/curl -s -F "title=''${PAM_USER}@${installEnv.HOSTNAME}: SSH login" -F "priority=10" -F "message=From: ''${PAM_RHOST}" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-ssh-login.pass)"
     fi
   '';
 in
