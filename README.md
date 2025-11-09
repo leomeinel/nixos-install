@@ -43,3 +43,36 @@ reboot
 ```sh
 doas passwd $USERNAME
 ```
+
+## Notes
+
+### auditd
+
+The rules in `/nixos/configs/security.nix` are modified but achieve similar results to this on a non-nix system:
+
+```sh
+ln -sf /usr/share/audit-rules/10-base-config.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/11-loginuid.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/12-ignore-error.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/21-no32bit.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/23-ignore-filesystems.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-1-create-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-2-modify-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-3-access-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-4-delete-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-5-perm-change-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42-6-owner-change-failed.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/30-ospp-v42.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/32-power-abuse.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/41-containers.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/42-injection.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/43-module-load.rules /etc/audit/rules.d/
+ln -sf /usr/share/audit-rules/44-installers.rules /etc/audit/rules.d/
+# Also included are: https://github.com/leomeinel/arch-install/tree/main/etc/audit/rules.d
+# See: https://github.com/leomeinel/arch-install/blob/main/setup.sh#L445
+FILE=/etc/audit/rules.d/31-arch-install-privileged.rules
+{
+    find "$(readlink -f /run/wrappers/bin)" -type f -perm -04000 2>/dev/null | awk '{ printf "-a always,exit -F arch=b64 -F path=%s -F perm=x -F auid>=1000 -F auid!=unset -F key=privileged\n", $1 }' | sed "s|/run/wrappers/wrappers\.[^/]*/|/run/wrappers/bin|"
+    filecap "$(readlink -f /run/wrappers/bin)" 2>/dev/null | sed '1d' | awk '{ printf "-a always,exit -F arch=b64 -F path=%s -F perm=x -F auid>=1000 -F auid!=unset -F key=privileged\n", $2 }' | sed "s|/run/wrappers/wrappers\.[^/]*/|/run/wrappers/bin|"
+} | sort -u >"${FILE}"
+```
