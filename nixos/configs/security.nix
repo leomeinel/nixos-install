@@ -94,7 +94,7 @@ in
     # audit options (/etc/audit/audit.rules)
     audit = {
       enable = "lock";
-      failureMode = 1;
+      failureMode = "printk";
       backlogLimit = 8192;
       # INFO: These rules were modified and are based on rules normally found in: /etc/audit/rules.d/ and arch-install
       rules = [
