@@ -49,6 +49,11 @@
       ];
       use-xdg-base-directories = true;
     };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
 
   # Filesystem options
