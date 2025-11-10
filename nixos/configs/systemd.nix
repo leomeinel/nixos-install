@@ -261,7 +261,7 @@
         ];
         script = ''
           # Fail on error
-          set -euo pipefail
+          set -eu
 
           # notify-log
           ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-container-updates" -F "priority=0" -F "message=Started monitoring updates" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
@@ -275,6 +275,8 @@
           for ((i = 0; i < IMAGES_LOCAL_LENGTH; i++)); do
               MATCHES=""
               local_digest="$(${pkgs.skopeo}/bin/skopeo inspect containers-storage:"''${IMAGES_LOCAL[''${i}]}" | ${pkgs.jq}/bin/jq -r ".Digest")"
+              [[ -z "''${local_digest}" ]] &&
+                  continue
               readarray -t remote_digests < <(${pkgs.skopeo}/bin/skopeo inspect --raw docker://"''${IMAGES_REMOTE[''${i}]}" | ${pkgs.jq}/bin/jq -r '.manifests[].digest')
               for digest in "''${remote_digests[@]}"; do
                   if [[ "$local_digest" == "$digest" ]]; then
@@ -287,11 +289,11 @@
           done
           UPDATES_LENGTH="''${#UPDATES[@]}"
 
-          # List number of outdated packages
+          # List number of outdated containers
           if [[ "''${UPDATES_LENGTH}" -ne 0 ]]; then
               MESSAGE="$(${pkgs.coreutils-full}/bin/printf '%s\n' "''${UPDATES[@]}")"
               # notify-log
-              ${pkgs.curl}/bin/curl -s -F "title=''${UPDATES_LENGTH} packages are out of date!" -F "priority=10" -F "message=''${MESSAGE}" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
+              ${pkgs.curl}/bin/curl -s -F "title=''${UPDATES_LENGTH} containers are out of date!" -F "priority=10" -F "message=''${MESSAGE}" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
           fi
         '';
       };
