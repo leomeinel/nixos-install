@@ -19,9 +19,11 @@
     fwupd.enable = true;
     logrotate.enable = true;
     sysstat.enable = true;
-    logind.settings.Login = {
-      KillUserProcesses = true;
-    };
+    logind.killUserProcesses = true;
+    # FIXME: Enable this immediately after 25.11 upgrade and remove above line
+    # logind.settings.Login = {
+    #   KillUserProcesses = true;
+    # };
     # usbguard options (/etc/usbguard/usbguard.conf)
     usbguard = {
       enable = true;
