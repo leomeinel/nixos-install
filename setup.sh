@@ -430,6 +430,21 @@ sed -i "s|${STRING}|${SYSUSER_PUBKEY}|g" "${FILE}"
 STRING="REPLACE_SYSUSER"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s|${STRING}|${SYSUSER}|g" "${FILE}"
+STRING="REPLACE_NIX_VERSION"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|${NIX_VERSION}|g" "${FILE}"
+STRING="REPLACE_GIT_EMAIL"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|${GIT_EMAIL}|g" "${FILE}"
+STRING="REPLACE_GIT_NAME"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|${GIT_NAME}|g" "${FILE}"
+STRING="REPLACE_GIT_SIGNINGKEY"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|${GIT_SIGNINGKEY}|g" "${FILE}"
+STRING="REPLACE_GIT_GPGSIGN"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|${GIT_GPGSIGN}|g" "${FILE}"
 STRING="REPLACE_INITIAL_PASSWORD"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s|${STRING}|${INITIAL_PASSWORD}|g" "${FILE}"
@@ -466,9 +481,6 @@ sed -i "s|${STRING}|${KEYMAP}|g" "${FILE}"
 STRING="REPLACE_TIMEZONE"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s|${STRING}|${TIMEZONE}|g" "${FILE}"
-STRING="REPLACE_NIX_VERSION"
-grep -q "${STRING}" "${FILE}" || sed_exit
-sed -i "s|${STRING}|${NIX_VERSION}|g" "${FILE}"
 ## END sed
 
 # Install NixOS

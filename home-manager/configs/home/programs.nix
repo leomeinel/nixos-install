@@ -9,6 +9,7 @@
 */
 
 {
+  installEnv,
   pkgs,
   ...
 }:
@@ -50,13 +51,21 @@
     # git options and config (.config/git/config)
     git = {
       enable = true;
-      userEmail = "leo@meinel.dev";
-      userName = "Leopold Johannes Meinel";
-      #signing.signByDefault = true;
+      userEmail = "${installEnv.GIT_EMAIL}";
+      userName = "${installEnv.GIT_NAME}";
+      signing = {
+        signByDefault = "${installEnv.GIT_GPGSIGN}";
+        signingKey = "${installEnv.GIT_SIGNINGKEY}";
+      };
       # git delta
       delta = {
         enable = true;
+        package = pkgs.delta;
         options = {
+          navigate = true;
+          light = false;
+          features = "decorations";
+          interactive.keep-plus-minus-markers = false;
           decorations = {
             commit-decoration-style = "blue ol";
             commit-style = "raw";
@@ -66,22 +75,20 @@
             hunk-header-line-number-style = "#067a00";
             hunk-header-style = "file line-number syntax";
           };
-          interactive.keep-plus-minus-markers = false;
-          navigate = true;
-          light = false;
-          features = "decorations";
         };
       };
       # custom config
       extraConfig = {
         core = {
-          editor = "nvim";
+          editor = "${pkgs.neovim}/bin/nvim";
+          pager = "${pkgs.delta}/bin/delta";
           autocrlf = "input";
         };
         init.defaultBranch = "main";
         pull.rebase = true;
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
+        interactive.diffFilter = "${pkgs.delta}/bin/delta --color-only --features=interactive";
         add.interactive.useBuiltin = false;
         credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
       };

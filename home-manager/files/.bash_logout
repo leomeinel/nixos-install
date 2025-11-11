@@ -9,6 +9,10 @@
 # -----
 ###
 
+# Stop ssh-agent if it is started
+[[ -n "${SSH_AUTH_SOCK}" ]] &&
+    eval "$(ssh-agent -k)"
+
 # Clear screen
 [[ "${SHLVL}" -eq 1 ]] &&
     clear
