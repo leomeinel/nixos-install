@@ -54,7 +54,7 @@
       userEmail = "${installEnv.GIT_EMAIL}";
       userName = "${installEnv.GIT_NAME}";
       signing = {
-        signByDefault = "${installEnv.GIT_GPGSIGN}";
+        signByDefault = if installEnv.GIT_GPGSIGN == "true" then true else false;
         key = "${installEnv.GIT_SIGNINGKEY}";
       };
       # git delta
