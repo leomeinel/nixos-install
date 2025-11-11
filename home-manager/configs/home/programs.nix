@@ -55,7 +55,7 @@
       userName = "${installEnv.GIT_NAME}";
       signing = {
         signByDefault = "${installEnv.GIT_GPGSIGN}";
-        signingKey = "${installEnv.GIT_SIGNINGKEY}";
+        key = "${installEnv.GIT_SIGNINGKEY}";
       };
       # git delta
       delta = {
