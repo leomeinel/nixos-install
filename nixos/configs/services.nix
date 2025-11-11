@@ -46,7 +46,7 @@
     openssh = {
       enable = true;
       ports = [ 9122 ];
-      allowSFTP = false;
+      allowSFTP = true;
       settings = {
         PasswordAuthentication = false;
         AuthenticationMethods = "publickey";
