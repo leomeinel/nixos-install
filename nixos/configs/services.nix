@@ -19,6 +19,9 @@
     fwupd.enable = true;
     logrotate.enable = true;
     sysstat.enable = true;
+    logind.settings.Login = {
+      KillUserProcesses = true;
+    };
     # usbguard options (/etc/usbguard/usbguard.conf)
     usbguard = {
       enable = true;
@@ -28,16 +31,20 @@
     postfix = {
       enable = true;
       extraConfig = ''
+        myhostname = localhost
+        mydomain = localdomain
+        mydestination = $myhostname, localhost.$mydomain, localhost
+        inet_interfaces = $myhostname, localhost
+        mynetworks_style = host
+        default_transport = error: outside mail is not deliverable
         disable_vrfy_command = yes
-        inet_interfaces = loopback-only
-        smtpd_banner = "$myhostname ESMTP"
       '';
     };
     # openssh options (/etc/ssh/sshd_config)
     openssh = {
       enable = true;
       ports = [ 9122 ];
-      allowSFTP = true;
+      allowSFTP = false;
       settings = {
         PasswordAuthentication = false;
         AuthenticationMethods = "publickey";
@@ -50,6 +57,7 @@
         TCPKeepAlive = "no";
         AllowAgentForwarding = "no";
         Banner = "/etc/issue.net";
+        AllowGroups = "ssh-allow";
       };
     };
   };

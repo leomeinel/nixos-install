@@ -17,6 +17,17 @@
 {
   # Environment options
   environment = {
+    # /etc/profile.d
+    extraInit = ''
+      # Set TMOUT of 1d
+      export TMOUT=86400
+
+      # Set umask
+      umask 027
+
+      # Disable coredumps
+      ulimit -c 0
+    '';
     # Packages
     ## Disable default packages
     defaultPackages = lib.mkForce [ ];

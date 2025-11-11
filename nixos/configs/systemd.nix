@@ -18,7 +18,10 @@
 {
   # systemd options (/etc/systemd/)
   systemd = {
-    coredump.enable = false;
+    coredump.extraConfig = ''
+      ProcessSizeMax=0
+      Storage=none
+    '';
     network = {
       enable = true;
       wait-online.enable = true;
@@ -35,6 +38,11 @@
     };
     # Services
     services = {
+      # System services
+      systemd-logind = {
+        serviceConfig.SupplementaryGroups = lib.mkForce "proc";
+      };
+
       # Container pods
       create-reverse-proxy-pod = {
         description = "Create reverse-proxy-pod";

@@ -40,13 +40,29 @@ in
           setEnv = [
             "LANG"
             "LC_ALL"
-            "LOCALE_ARCHIVE"
+            "DIFFPROG"
+            "JAVA_HOME"
+            "MANPAGER"
+            "MANROFFOPT"
+            "MYSQL_HOME"
+            "PAGER"
+            "VISUAL"
           ];
           groups = [ "wheel" ];
         }
       ];
     };
+    # /etc/login.defs
+    loginDefs.settings = {
+      YESCRYPT_COST_FACTOR = "11";
+      UMASK = "027";
+      HOME_MODE = "0700";
+      SHA_CRYPT_MIN_ROUNDS = "99999999";
+      SHA_CRYPT_MAX_ROUNDS = "999999999";
+    };
     # FIXME: Find a way to implement pam.d restrictions
+    # See: https://github.com/NixOS/nixpkgs/issues/287420
+    # See: https://discourse.nixos.org/t/enforcing-strong-passwords-on-nixos-pam-pwquality-so-module-not-known/36420
     # FIXME: /etc/security/faillock.conf
     # pam options
     pam = {

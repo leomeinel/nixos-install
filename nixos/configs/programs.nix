@@ -53,8 +53,8 @@
 
         # Rust core-utils
         bat = "bat --decorations auto --color auto";
-        eza = "eza -la --color=automatic";
-        ll = "eza -la --color=automatic";
+        eza = "eza -lag --color=automatic";
+        ll = "eza -lag --color=automatic";
         fd = "fd -Hs -c auto";
         hyperfine = "hyperfine -w 3 -r 12 --style auto";
         rg = "rg -s --color auto";
@@ -62,6 +62,7 @@
         # xdg-ninja recommendations
         adb = "HOME=\"\${XDG_DATA_HOME}\"/android command adb";
         wget = "wget --hsts-file=\"\${XDG_DATA_HOME}\"/wget-hsts";
+        java = "java -Djava.util.prefs.userRoot=\${XDG_CONFIG_HOME}/java";
       };
     };
   };

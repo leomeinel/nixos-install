@@ -20,11 +20,12 @@
     # FIXME: Use system groups
     groups = {
       audit = { };
-      proc = { };
-      usbguard = { };
       log = { };
+      proc = { };
       rfkill = { };
+      ssh-allow = { };
       sys = { };
+      usbguard = { };
     };
     # Users
     users = {
@@ -39,6 +40,7 @@
           "log"
           "proc"
           "rfkill"
+          "ssh-allow"
           "sys"
           "systemd-journal"
           "usbguard"

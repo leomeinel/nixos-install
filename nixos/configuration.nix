@@ -116,7 +116,8 @@
       "nl_NL.UTF-8/UTF-8"
     ];
     extraLocaleSettings = {
-      LANGUAGE = "en_US.UTF-8";
+      LANG = "en_US.UTF-8";
+      LANGUAGE = "en_US.UTF-8:en_US:en:C";
       LC_ALL = "en_US.UTF-8";
       LC_ADDRESS = "en_US.UTF-8";
       LC_COLLATE = "en_US.UTF-8";
@@ -127,9 +128,9 @@
       LC_NUMERIC = "en_US.UTF-8";
       LC_TIME = "en_DK.UTF-8";
       LC_MEASUREMENT = "en_DK.UTF-8";
-      LC_PAPER = "nl_NL.UTF-8";
-      LC_TELEPHONE = "nl_NL.UTF-8";
-      LC_IDENTIFICATION = "nl_NL.UTF-8";
+      LC_PAPER = "de_DE.UTF-8";
+      LC_TELEPHONE = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
     };
   };
 
