@@ -10,6 +10,7 @@
 
 {
   installEnv,
+  lib,
   pkgs,
   ...
 }:
@@ -88,7 +89,7 @@
         pull.rebase = true;
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
-        interactive.diffFilter = "${pkgs.delta}/bin/delta --color-only --features=interactive";
+        interactive.diffFilter = lib.mkForce "${pkgs.delta}/bin/delta --color-only --features=interactive";
         add.interactive.useBuiltin = false;
         credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
       };
