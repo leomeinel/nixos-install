@@ -272,7 +272,7 @@
           set -eu
 
           # notify-log
-          ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-container-updates" -F "priority=0" -F "message=Started monitoring updates" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
+          ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-container-updates" -F "priority=0" -F "message=Started monitoring container updates" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
 
           # Get ''${UPDATES[@]}
           REPO_DIR=/root/src/nixos-install
@@ -283,8 +283,10 @@
           for ((i = 0; i < IMAGES_LOCAL_LENGTH; i++)); do
               MATCHES=""
               local_digest="$(${pkgs.skopeo}/bin/skopeo inspect containers-storage:"''${IMAGES_LOCAL[''${i}]}" | ${pkgs.jq}/bin/jq -r ".Digest")"
-              [[ -z "''${local_digest}" ]] &&
+              if [[ -z "''${local_digest}" ]]; then
+                  ${pkgs.curl}/bin/curl -s -F "title=Skipped container image" -F "priority=0" -F "message=''${local_digest} does not exist locally." "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
                   continue
+              fi
               readarray -t remote_digests < <(${pkgs.skopeo}/bin/skopeo inspect --raw docker://"''${IMAGES_REMOTE[''${i}]}" | ${pkgs.jq}/bin/jq -r '.manifests[].digest')
               for digest in "''${remote_digests[@]}"; do
                   if [[ "$local_digest" == "$digest" ]]; then
@@ -313,7 +315,7 @@
           ${pkgs.coreutils-full}/bin/sleep 5
 
           # notify-log
-          ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-container-updates" -F "priority=0" -F "message=Completed monitoring updates successfully" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
+          ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-container-updates" -F "priority=0" -F "message=Completed monitoring container updates successfully" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
         '';
       };
       monitor-container-updates-log-failure = {
