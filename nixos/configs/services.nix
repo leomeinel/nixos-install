@@ -59,7 +59,7 @@
         TCPKeepAlive = "no";
         AllowAgentForwarding = "no";
         Banner = "/etc/issue.net";
-        AllowGroups = "ssh-allow";
+        AllowGroups = [ "ssh-allow" ];
       };
     };
   };
