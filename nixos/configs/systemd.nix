@@ -48,7 +48,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         wantedBy = [
           "multi-user.target"
@@ -72,7 +71,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         wantedBy = [
           "multi-user.target"
@@ -92,7 +90,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 21600;
-          RemainAfterExit = "yes";
         };
         onSuccess = [
           "backup-container-volumes-log-success.service"
@@ -175,7 +172,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
@@ -190,7 +186,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
@@ -210,7 +205,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 3600;
-          RemainAfterExit = "yes";
         };
         onSuccess = [
           "monitor-updates-log-success.service"
@@ -253,7 +247,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
@@ -268,7 +261,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
@@ -285,7 +277,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 3600;
-          RemainAfterExit = "yes";
         };
         onSuccess = [
           "monitor-container-updates-log-success.service"
@@ -339,7 +330,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
@@ -354,7 +344,6 @@
         serviceConfig = {
           Type = "oneshot";
           TimeoutSec = 120;
-          RemainAfterExit = "yes";
         };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
