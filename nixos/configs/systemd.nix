@@ -223,7 +223,7 @@
           set -euo pipefail
 
           # Set environment
-          PATH="''${PATH}:${pkgs.git}/bin:${pkgs.inetutils}/bin"
+          PATH="''${PATH}:${pkgs.git}/bin:${pkgs.inetutils}/bin:${pkgs.nix}/bin"
 
           # notify-log
           ${pkgs.curl}/bin/curl -s -F "title=${installEnv.HOSTNAME}-monitor-updates" -F "priority=0" -F "message=Started monitoring updates" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-updates.pass)"
