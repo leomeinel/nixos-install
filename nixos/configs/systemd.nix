@@ -283,7 +283,8 @@
               MATCHES=""
               local_digest="$(${pkgs.skopeo}/bin/skopeo inspect containers-storage:"''${IMAGES_LOCAL[''${i}]}" | ${pkgs.jq}/bin/jq -r ".Digest")"
               if [[ -z "''${local_digest}" ]]; then
-                  ${pkgs.curl}/bin/curl -s -F "title=Skipped container image" -F "priority=0" -F "message=''${IMAGES_LOCAL[''${i}]} does not exist." "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
+                  # notify-log
+                  ${pkgs.curl}/bin/curl -s -F "title=Skipped container image" -F "priority=0" -F "message=''${IMAGES_LOCAL[''${i}]} does not exist" "https://${installEnv.NOTIFY_DOMAIN}/message?token=$(${pkgs.coreutils-full}/bin/cat /run/secrets/keys/gotify-${installEnv.HOSTNAME}-monitor-container-updates.pass)"
                   continue
               fi
               readarray -t remote_digests < <(${pkgs.skopeo}/bin/skopeo inspect --raw docker://"''${IMAGES_REMOTE[''${i}]}" | ${pkgs.jq}/bin/jq -r '.manifests[].digest')
