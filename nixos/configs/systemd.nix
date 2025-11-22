@@ -45,7 +45,11 @@
       # Container pods
       create-reverse-proxy-pod = {
         description = "Create reverse-proxy-pod";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         wantedBy = [
           "multi-user.target"
         ];
@@ -65,7 +69,11 @@
       # Container additional services
       certbot-start = {
         description = "Start podman-certbot.service";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         wantedBy = [
           "multi-user.target"
         ];
@@ -82,8 +90,9 @@
       backup-container-volumes = {
         description = "Backup container volumes";
         serviceConfig = {
-          Type = "exec";
-          TimeoutStartSec = 10800;
+          Type = "oneshot";
+          TimeoutSec = 21600;
+          RemainAfterExit = "yes";
         };
         onSuccess = [
           "backup-container-volumes-log-success.service"
@@ -163,7 +172,11 @@
       };
       backup-container-volumes-log-success = {
         description = "Log success of service: backup-container-volumes";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
@@ -174,7 +187,11 @@
       };
       backup-container-volumes-log-failure = {
         description = "Log failure of service: backup-container-volumes";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
@@ -191,8 +208,9 @@
       monitor-updates = {
         description = "Monitor system updates";
         serviceConfig = {
-          Type = "exec";
+          Type = "oneshot";
           TimeoutSec = 3600;
+          RemainAfterExit = "yes";
         };
         onSuccess = [
           "monitor-updates-log-success.service"
@@ -232,7 +250,11 @@
       };
       monitor-updates-log-success = {
         description = "Log success of service: monitor-updates";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
@@ -243,7 +265,11 @@
       };
       monitor-updates-log-failure = {
         description = "Log failure of service: monitor-updates";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
@@ -257,8 +283,9 @@
       monitor-container-updates = {
         description = "Monitor container updates";
         serviceConfig = {
-          Type = "exec";
+          Type = "oneshot";
           TimeoutSec = 3600;
+          RemainAfterExit = "yes";
         };
         onSuccess = [
           "monitor-container-updates-log-success.service"
@@ -309,7 +336,11 @@
       };
       monitor-container-updates-log-success = {
         description = "Log success of service: monitor-container-updates";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
@@ -320,7 +351,11 @@
       };
       monitor-container-updates-log-failure = {
         description = "Log failure of service: monitor-container-updates";
-        serviceConfig.Type = "exec";
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutSec = 120;
+          RemainAfterExit = "yes";
+        };
         script = ''
           # Sleep 5 seconds to make sure this is sent last
           ${pkgs.coreutils-full}/bin/sleep 5
