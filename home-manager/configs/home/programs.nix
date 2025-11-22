@@ -9,7 +9,6 @@
 
 {
   installEnv,
-  lib,
   pkgs,
   ...
 }:
