@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 ###
 # File: dhparams.sh
-# Author: Leopold Meinel (leo@meinel.dev)
+# Author: Leopold Johannes Meinel (leo@meinel.dev)
 # -----
-# Copyright (c) 2025 Leopold Meinel & contributors
-# SPDX ID: GPL-3.0-or-later
-# URL: https://www.gnu.org/licenses/gpl-3.0-standalone.html
-# -----
+# Copyright (c) 2025 Leopold Johannes Meinel & contributors
+# SPDX ID: Apache-2.0
+# URL: https://www.apache.org/licenses/LICENSE-2.0
 ###
 
 # Fail on error
