@@ -212,11 +212,11 @@
 
           # Get ''${UPDATES[@]}
           TMP_DIR="$(${pkgs.coreutils-full}/bin/mktemp -d /tmp/monitor-updates.service-XXXXXX)"
-          ${pkgs.git}/bin/git clone --depth 1 --reference /root/src/nixos-install /root/src/nixos-install "''${TMP_DIR}"
+          ${pkgs.git}/bin/git clone /root/src/nixos-install "''${TMP_DIR}"
           cd "''${TMP_DIR}"
           ${pkgs.nix}/bin/nix flake update
           ${pkgs.nix}/bin/nix build ".#nixosConfigurations.${installEnv.HOSTNAME}.config.system.build.toplevel"
-          readarray -t UPDATES < <(${pkgs.nvd}/bin/nvd --color=never --version-highlight=none diff /run/current-system ./result | grep "^\[[A-Z]" | awk '{print $3}')
+          readarray -t UPDATES < <(${pkgs.nvd}/bin/nvd --color=never --version-highlight=none diff /run/current-system ./result | ${pkgs.gnugrep}/bin/grep "^\[[A-Z]" | ${pkgs.gawk}/bin/awk '{print $3}')
           UPDATES_LENGTH="''${#UPDATES[@]}"
 
           # List number of outdated packages
