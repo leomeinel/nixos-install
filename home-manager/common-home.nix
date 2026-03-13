@@ -2,7 +2,7 @@
   File: common-home.nix
   Author: Leopold Johannes Meinel (leo@meinel.dev)
   -----
-  Copyright (c) 2025 Leopold Johannes Meinel & contributors
+  Copyright (c) 2026 Leopold Johannes Meinel & contributors
   SPDX ID: Apache-2.0
   URL: https://www.apache.org/licenses/LICENSE-2.0
 */
@@ -78,7 +78,7 @@
   nix = {
     gc = {
       automatic = true;
-      frequency = "weekly";
+      dates = "weekly";
       options = "--delete-older-than 30d";
     };
   };

@@ -2,7 +2,7 @@
   File: programs.nix
   Author: Leopold Johannes Meinel (leo@meinel.dev)
   -----
-  Copyright (c) 2025 Leopold Johannes Meinel & contributors
+  Copyright (c) 2026 Leopold Johannes Meinel & contributors
   SPDX ID: Apache-2.0
   URL: https://www.apache.org/licenses/LICENSE-2.0
 */
@@ -50,34 +50,12 @@
     # git options and config (.config/git/config)
     git = {
       enable = true;
-      userEmail = "${installEnv.GIT_EMAIL}";
-      userName = "${installEnv.GIT_NAME}";
-      signing = {
-        signByDefault = if installEnv.GIT_GPGSIGN == "true" then true else false;
-        key = "${installEnv.GIT_SIGNINGKEY}";
-      };
-      # git delta
-      delta = {
-        enable = true;
-        package = pkgs.delta;
-        options = {
-          navigate = true;
-          light = false;
-          features = "decorations";
-          interactive.keep-plus-minus-markers = false;
-          decorations = {
-            commit-decoration-style = "blue ol";
-            commit-style = "raw";
-            file-style = "omit";
-            hunk-header-decoration-style = "blue box";
-            hunk-header-file-style = "red";
-            hunk-header-line-number-style = "#067a00";
-            hunk-header-style = "file line-number syntax";
-          };
+      settings = {
+        user = {
+          email = "${installEnv.GIT_EMAIL}";
+          name = "${installEnv.GIT_NAME}";
+          signingKey = "${installEnv.GIT_SIGNINGKEY}";
         };
-      };
-      # custom config
-      extraConfig = {
         core = {
           editor = "${pkgs.neovim}/bin/nvim";
           pager = "${pkgs.delta}/bin/delta";
@@ -85,10 +63,32 @@
         };
         init.defaultBranch = "main";
         pull.rebase = true;
+        commit.gpgSign = if installEnv.GIT_GPGSIGN == "true" then true else false;
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
         add.interactive.useBuiltin = false;
         credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
+      };
+    };
+    # git delta
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+      package = pkgs.delta;
+      options = {
+        navigate = true;
+        light = false;
+        features = "decorations";
+        interactive.keep-plus-minus-markers = false;
+        decorations = {
+          commit-decoration-style = "blue ol";
+          commit-style = "raw";
+          file-style = "omit";
+          hunk-header-decoration-style = "blue box";
+          hunk-header-file-style = "red";
+          hunk-header-line-number-style = "#067a00";
+          hunk-header-style = "file line-number syntax";
+        };
       };
     };
   };

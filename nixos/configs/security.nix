@@ -2,7 +2,7 @@
   File: security.nix
   Author: Leopold Johannes Meinel (leo@meinel.dev)
   -----
-  Copyright (c) 2025 Leopold Johannes Meinel & contributors
+  Copyright (c) 2026 Leopold Johannes Meinel & contributors
   SPDX ID: Apache-2.0
   URL: https://www.apache.org/licenses/LICENSE-2.0
 */
@@ -98,13 +98,12 @@ in
     };
     auditd = {
       enable = true;
-      # FIXME: Enable this immediately after 25.11 upgrade
-      # settings = {
-      #   log_group = "audit";
-      #   log_format = "RAW";
-      #   max_log_file = "100";
-      #   num_logs = "10";
-      # };
+      settings = {
+        log_group = "audit";
+        log_format = "RAW";
+        max_log_file = "100";
+        num_logs = "10";
+      };
     };
     # audit options (/etc/audit/audit.rules)
     audit = {
