@@ -33,9 +33,10 @@
       enable = true;
       settings.main = {
         myhostname = "localhost";
+        mydomain = "localdomain";
         mydestination = [
           "$myhostname"
-          "localhost.localdomain"
+          "localhost.$mydomain"
           "localhost"
         ];
         inet_interfaces = [
