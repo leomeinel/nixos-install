@@ -2,7 +2,7 @@
   File: services.nix
   Author: Leopold Johannes Meinel (leo@meinel.dev)
   -----
-  Copyright (c) 2025 Leopold Johannes Meinel & contributors
+  Copyright (c) 2026 Leopold Johannes Meinel & contributors
   SPDX ID: Apache-2.0
   URL: https://www.apache.org/licenses/LICENSE-2.0
 */
@@ -31,15 +31,21 @@
     # postfix options (/etc/postfix/main.cf)
     postfix = {
       enable = true;
-      extraConfig = ''
-        myhostname = localhost
-        mydomain = localdomain
-        mydestination = $myhostname, localhost.$mydomain, localhost
-        inet_interfaces = $myhostname, localhost
-        mynetworks_style = host
-        default_transport = error: outside mail is not deliverable
-        disable_vrfy_command = yes
-      '';
+      settings.main = {
+        myhostname = "localhost";
+        mydestination = [
+          "$myhostname"
+          "localhost.localdomain"
+          "localhost"
+        ];
+        inet_interfaces = [
+          "$myhostname"
+          "localhost"
+        ];
+        mynetworks_style = "host";
+        default_transport = "error: outside mail is not deliverable";
+        disable_vrfy_command = "yes";
+      };
     };
     # openssh options (/etc/ssh/sshd_config)
     openssh = {
