@@ -2,7 +2,7 @@
   File: virtualisation.nix
   Author: Leopold Johannes Meinel (leo@meinel.dev)
   -----
-  Copyright (c) 2025 Leopold Johannes Meinel & contributors
+  Copyright (c) 2026 Leopold Johannes Meinel & contributors
   SPDX ID: Apache-2.0
   URL: https://www.apache.org/licenses/LICENSE-2.0
 */
@@ -33,7 +33,7 @@
         certbot = {
           # https://hub.docker.com/r/certbot/dns-cloudflare
           # update-equivalent: docker.io/certbot/dns-cloudflare:latest
-          image = "docker.io/certbot/dns-cloudflare:v5.1.0";
+          image = "docker.io/certbot/dns-cloudflare:v5.4.0";
           pull = "newer";
           # INFO: This is started automatically by certbot-start.service
           autoStart = false;
@@ -65,7 +65,7 @@
         certs-reverse-proxy = {
           # https://code.forgejo.org/oci/-/packages/container/alpine/latest
           # update-equivalent: code.forgejo.org/oci/alpine:latest
-          image = "code.forgejo.org/oci/alpine:3.22";
+          image = "code.forgejo.org/oci/alpine:3.23";
           pull = "newer";
           cmd = [
             "/bin/sh"
