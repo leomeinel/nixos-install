@@ -83,7 +83,7 @@
         reverse-proxy = {
           # https://hub.docker.com/_/nginx
           # update-equivalent: docker.io/nginx:stable-alpine
-          image = "docker.io/nginx:1.28-alpine";
+          image = "docker.io/nginx:1.30-alpine";
           pull = "newer";
           extraOptions = [
             "--replace"
