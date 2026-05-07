@@ -63,10 +63,6 @@
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.stateHome}/bash
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.configHome}/parallel
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.dataHome}/platformio
-        run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.configHome}/r
-        run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.dataHome}/r/library
-        run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.stateHome}/r
-        run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.stateHome}/radian
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.dataHome}/rustup
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.configHome}/screen
         run ${pkgs.coreutils-full}/bin/mkdir -p ${config.xdg.cacheHome}/texlive
