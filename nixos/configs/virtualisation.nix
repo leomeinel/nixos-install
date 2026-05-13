@@ -33,7 +33,7 @@
         certbot = {
           # https://hub.docker.com/r/certbot/dns-cloudflare
           # update-equivalent: docker.io/certbot/dns-cloudflare:latest
-          image = "docker.io/certbot/dns-cloudflare:v5.5.0";
+          image = "docker.io/certbot/dns-cloudflare:v5.6.0";
           pull = "newer";
           # INFO: This is started automatically by certbot-start.service
           autoStart = false;
